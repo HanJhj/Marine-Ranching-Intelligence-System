@@ -23,6 +23,7 @@ from learn.views import index
 from django.urls import path, include
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
@@ -33,5 +34,7 @@ urlpatterns = [
                                                       email_template_name='userprofile/password_reset_email.html',),
          name='password_reset'),
     path('learn/', include('learn.urls')),  # 这里包含learn应用的URL配置
+    path('SmartCenter/', include('SmartCenter.urls')),  
 ]
-
+#设置静态文件路径
+urlpatterns += staticfiles_urlpatterns()
