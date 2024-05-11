@@ -35,6 +35,7 @@ urlpatterns = [
          name='password_reset'),
     path('learn/', include('learn.urls')),  # 这里包含learn应用的URL配置
     path('SmartCenter/', include('SmartCenter.urls')),  
+    path('DataCenter/', include('DataCenter.urls')),  
 ]
 #设置静态文件路径
 urlpatterns += staticfiles_urlpatterns()

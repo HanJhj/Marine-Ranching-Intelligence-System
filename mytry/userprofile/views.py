@@ -24,7 +24,7 @@ def user_login(request):
                 # return redirect("index") 
                 # return render(request, 'SmartCenter/trend.html', context)
                 # return render(request, 'SmartCenter/your_template.html', {'context_data': data})
-                return redirect("SmartCenter") 
+                return redirect("DataCenter") 
 
             else:
                 context = {'obj': login_form, 'error': '账号或密码错误，请重新输入！'}
