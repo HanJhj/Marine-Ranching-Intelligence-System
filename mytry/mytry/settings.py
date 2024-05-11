@@ -87,8 +87,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mytry',
         'USER': 'root',
-        # 'PASSWORD': '123456',
-        'PASSWORD': '',
+        'PASSWORD': 'Pdz727703',
+        # 'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -142,7 +142,7 @@ AUTH_USER_MODEL = 'userprofile.UserProfile'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static').replace('\\', '/')
 STATICFILES_DIRS = (
-    # os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static"),
     # ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
     # ('images', os.path.join(STATIC_ROOT, 'images').replace('\\', '/')),
     # ('fonts', os.path.join(STATIC_ROOT, 'fonts').replace('\\', '/')),
