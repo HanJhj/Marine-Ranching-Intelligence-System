@@ -26,7 +26,7 @@
           </ul>
     </div>
     <div class="header_center left" style="position:relative">
-        <h2><strong>大数据展示</strong></h2>
+        <h2><strong>海洋牧场监控可视化系统</strong></h2>
 
     </div>
     <div class="right nav text_right">
@@ -37,18 +37,69 @@
 
 </header>
 <!--内容部分-->
-<div class="con left" style="width: 98%;margin-left: 1%;margin-bottom: 25px;">
-
-    <input type="text" placeholder="请输入姓名身份证" style="width: 180px;height: 28px;border-radius: 3px;text-indent: 1em;border: 1px solid#4b8df8;color: #fff;" /><button class="btn btn-primary btn-sm" style="margin-left:20px"><span class="glyphicon glyphicon-search"></span>查询</button>
+<div class="con left" style="width: 49%;">
 
     <div class="div_any_child">
-          <div class="table_p" style="height: 96%;margin-top: 20px;">
+        <div class="div_any_title"><img src="../images/title_4.png">用户列表</div>
+        <input type="text" placeholder="请输入用户名" style="width: 180px;height: 28px;border-radius: 3px;text-indent: 1em;border: 1px solid#4b8df8;color: #fff;margin-left: 30px; margin-top: 45px;" /><button class="btn btn-primary btn-sm" style="margin-left:20px"><span class="glyphicon glyphicon-search"></span>查询</button>
+
+          <div class="table_p" style="height: 85%;margin-top: 20px;">
               <table>
                   <thead><tr>
-                      <th>序号</th>
-                      <th>姓名</th>
-                      <th>慢病</th>
-                      <th>操作</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>密码</th>
+                    <th>管理员权限</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>萝卜1</td>
+                        <td>高血压</td>
+                        <td>
+                            <!-- 使用label和input元素来创建滑动开关按钮 -->
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    
+                  <tr><td>2</td><td>萝卜2</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>3</td><td>萝卜3</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>4</td><td>萝卜4</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>5</td><td>萝卜5</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>6</td><td>萝卜6</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>7</td><td>萝卜7</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>8</td><td>萝卜8</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>9</td><td>萝卜9</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  <tr><td>10</td><td>萝卜0</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="box">
+              <div id="pagination" class="page fl"></div>
+          </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="con right" style="width: 49%">
+
+    <div class="div_any_child">
+        <div class="div_any_title"><img src="../images/title_13.png">设备列表</div>
+        <input type="text" placeholder="请输入设备名称" style="width: 180px;height: 28px;border-radius: 3px;text-indent: 1em;border: 1px solid#4b8df8;color: #fff;margin-left: 30px; margin-top: 45px;" /><button class="btn btn-primary btn-sm" style="margin-left:20px"><span class="glyphicon glyphicon-search"></span>查询</button>
+
+          <div class="table_p" style="height: 85%;margin-top: 20px;">
+              <table>
+                  <thead><tr>
+                      <th>用户名</th>
+                      <th>邮箱</th>
+                      <th>密码</th>
+                      <th>权限</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -73,5 +124,6 @@
 
     </div>
 </div>
+
 </body>
 </html>
