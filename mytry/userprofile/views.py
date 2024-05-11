@@ -20,6 +20,10 @@ def user_login(request):
             user = authenticate(username=data['username'], password=data['password'])
             if user:
                 login(request, user)
+                # 数据查询，根据用户名查询出用户的权限
+                authority = User.objects.get(username=data['username']).is_superuser & User.objects.get(username=data['username']).is_staff
+                if authority:
+                    return redirect("SmartCenter")
                 # return redirect("article:article-list")
                 # return redirect("index") 
                 # return render(request, 'SmartCenter/trend.html', context)

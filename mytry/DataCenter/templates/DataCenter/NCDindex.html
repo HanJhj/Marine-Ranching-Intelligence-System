@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>数据中心</title>
-    <link href="{% static 'SmartCenter/css/common.css' %}" rel="stylesheet">
-    <script src="{% static 'SmartCenter/js/Plugin/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'SmartCenter/js/Plugin/echarts.min.js' %}"></script>
+    <link href="{% static 'DataCenter/css/common.css' %}" rel="stylesheet">
+    <script src="{% static 'DataCenter/js/Plugin/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'DataCenter/js/Plugin/echarts.min.js' %}"></script>
     <!-- <script src="../scripts/Plugin/bmap.min.js"></script> -->
     <!-- <script src="http://api.map.baidu.com/api?v=2.0&ak=LelFSt6BfykGf8m3PB5zr8LaXAG2cMg6"></script> -->
-    <script src="{% static 'SmartCenter/js/common.js' %}"></script>
-    <script src="{% static 'SmartCenter/js/NCDindex.js' %}"></script>
+    <script src="{% static 'DataCenter/js/common.js' %}"></script>
+    <script src="{% static 'DataCenter/js/NCDindex.js' %}"></script>
     <!-- <script src="../scripts/echarts.js"></script> -->
 </head>
 <body>
@@ -18,19 +18,20 @@
 <header class="header left">
     <div class="left nav">
         <ul>
-            <li><i class="nav_1"></i><a href="index.html">慢病概况</a> </li>
-            <li><i class="nav_2"></i><a href="quota.html">指标分析</a> </li>
+            <li><i class="nav_1"></i><a href="index.html">主要信息</a> </li>
+            <li><i class="nav_2"></i><a href="quota.html">水下系统</a> </li>
             <li class="nav_active"><i class="nav_3"></i><a href="{% url 'DataCenter' %}">数据中心</a> </li>
             <li><i class="nav_4"></i><a href="{% url 'SmartCenter' %}">智能中心</a> </li>
-
         </ul>
     </div>
-    <div class="header_center center">
-        <h2><strong>数据中心</strong></h2>
+    <div class="header_center left" style="position:relative">
+        <h2><strong>数据中心系统</strong></h2>
 
     </div>
     <div class="right nav">
-        
+        <ul>
+            <li><i class="nav_5"></i><a href="{% url 'DataCenter' %}">管理中心</a> </li>
+          </ul>
     </div>
 
 </header>
@@ -122,27 +123,27 @@
     <div class="div_any">
         <div class="left div_any01">
             <div class="div_any_child">
-                <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_1.png' %}">数据总量</div>
+                <div class="div_any_title"><img src="{% static 'DataCenter/images/title_1.png' %}">数据总量</div>
                 <p id="pieChart" class="p_chart"></p>
             </div>
             <div class="div_any_child">
-                <div class="div_any_title"><img src="{% static 'SmartCenterimages/title_2.png' %}">硬件信息统计</div>
+                <div class="div_any_title"><img src="{% static 'DataCenter/images/title_2.png' %}">硬件信息统计</div>
                 <p id="histogramChart" class="p_chart"></p>
             </div>
         </div>
         <div class="div_any02 left ">
             <div class="div_any_child div_height">
-                <div class="div_any_title any_title_width"><img src="{% static 'images/title_0.png' %}">数据中心分布</div>
+                <div class="div_any_title any_title_width"><img src="{% static 'DataCenter/images/title_0.png' %}">数据中心分布</div>
                 <div id="mapChart" style="width:97.5%;height:95%;display: inline-block;padding-left: 1.25%;padding-top:2.2%"></div>
             </div>
         </div>
         <div class="right div_any01">
             <div class="div_any_child">
-                <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_3.png' %}">数据类型统计</div>
+                <div class="div_any_title"><img src="{% static 'DataCenter/images/title_3.png' %}">数据类型统计</div>
                 <p id="lineChart" class="p_chart"></p>
             </div>
             <div class="div_any_child">
-                <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_4.png' %}">传感器信息</div>
+                <div class="div_any_title"><img src="{% static 'DataCenter/images/title_4.png' %}">传感器信息</div>
                 <p id="lineChart2" class="p_chart"></p>
             </div>
         </div>
