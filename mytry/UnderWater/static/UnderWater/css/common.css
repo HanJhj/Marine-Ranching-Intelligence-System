@@ -132,7 +132,7 @@ a:hover{
 }
 .nav>ul>li{
     display: inline-block;
-    width: 96px;
+    width: 18%;
     text-align: center;
     height: 50px;
     position: relative;
