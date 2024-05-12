@@ -25,10 +25,10 @@
     <header class="header left">
       <div class="left nav">
           <ul>
-              <li><i class="nav_1"></i><a href="index.html">主要信息</a> </li>
-              <li><i class="nav_2"></i><a href="quota.html">水下系统</a> </li>
+              <li><i class="nav_1"></i><a href="{% url 'MainInformation_user' %}">主要信息</a> </li>
+              <li><i class="nav_2"></i><a href="{% url 'UnderWater_user' %}">水下系统</a> </li>
     
-              <li class="nav_active"><i class="nav_4"></i><a href="trend.html">智能中心</a> </li>
+              <li class="nav_active"><i class="nav_4"></i><a href="{% url 'SmartCenter_user' %}">智能中心</a> </li>
     
             </ul>
       </div>

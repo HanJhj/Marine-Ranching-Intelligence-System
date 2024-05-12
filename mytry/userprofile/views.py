@@ -27,11 +27,11 @@ def user_login(request):
                 authority = User.objects.get(username=data['username']).is_superuser & User.objects.get(username=data['username']).is_staff
                 if authority:
                     # return redirect("BackManage") 
-                    return redirect("SmartCenter") 
+                    return redirect("MainInformation") 
                     
                 else:
                     # return redirect("MainInformation")
-                    return redirect("SmartCenter_user") 
+                    return redirect("MainInformation_user") 
 
             else:
                 context = {'obj': login_form, 'error': '账号或密码错误，请重新输入！'}
