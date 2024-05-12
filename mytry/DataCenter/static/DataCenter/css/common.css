@@ -104,6 +104,14 @@ a:hover{
    font-size: 22px !important;
 
 }
+.showTime{
+    position: absolute;
+    top: 2.5rem;
+    right: 1.25rem;
+    line-height: .2rem;
+    font-size: 1rem;
+    color:rgb(255,255,255);
+}
 .color_font{
     color: #e8f7fe !important;
     font-size: 12px !important;
@@ -125,7 +133,8 @@ a:hover{
 }
 .nav>ul>li{
     display: inline-block;
-    width: 120px;
+    /* width: 120px; */
+    width: 18%;
     text-align: center;
     height: 50px;
     position: relative;

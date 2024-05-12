@@ -18,23 +18,64 @@
 <header class="header left">
     <div class="left nav">
         <ul>
-            <li><i class="nav_1"></i><a href="index.html">主要信息</a> </li>
-            <li><i class="nav_2"></i><a href="quota.html">水下系统</a> </li>
+            <li><i class="nav_1"></i><a href="{% url 'MainInformation' %}">主要信息</a> </li>
+            <li><i class="nav_2"></i><a href="{% url 'UnderWater' %}">水下系统</a></li>
             <li class="nav_active"><i class="nav_3"></i><a href="{% url 'DataCenter' %}">数据中心</a> </li>
             <li><i class="nav_4"></i><a href="{% url 'SmartCenter' %}">智能中心</a> </li>
+            <li><i class="nav_5"></i><a href="{% url 'BackManage' %}">后台管理</a> </li>
         </ul>
     </div>
     <div class="header_center left" style="position:relative">
         <h2><strong>数据中心系统</strong></h2>
 
     </div>
-    <div class="right nav">
-        <ul>
-            <li><i class="nav_5"></i><a href="{% url 'DataCenter' %}">管理中心</a> </li>
-          </ul>
-    </div>
+    <div class="right showTime text_right"></div>
+    <script>
+    function time() {  
+        var dt = new Date();  
+        var y = dt.getFullYear();  
+        var mt = dt.getMonth() + 1;  
+        var day = dt.getDate();  
+        var h = dt.getHours(); // 获取时  
+        var m = dt.getMinutes(); // 获取分  
+        var s = dt.getSeconds(); // 获取秒  
+
+        // 为了确保月份、日期、小时、分钟和秒都是两位数  
+        mt = mt < 10 ? '0' + mt : mt;  
+        day = day < 10 ? '0' + day : day;  
+        h = h < 10 ? '0' + h : h;  
+        m = m < 10 ? '0' + m : m;  
+        s = s < 10 ? '0' + s : s;  
+
+        // 更新显示时间  
+        document.querySelector(".showTime").innerHTML =  
+            "日期：" +  
+            y +  
+            "年" +  
+            mt +  
+            "月" +  
+            day +  
+            "日" +
+            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+  
+            "时间：" +  
+            h +  
+            "时" +  
+            m +  
+            "分" +  
+            s +  
+            "秒";  
+
+        // 设定定时器，循环运行  
+        setTimeout(time, 1000);  
+}  
+
+// 页面加载完成后立即开始时间显示  
+window.onload = time;  
+    </script>
+
 
 </header>
+
 <!--右下角显示实时日期和时间-->
 <!-- <!DOCTYPE html> -->
 <!-- <html> -->

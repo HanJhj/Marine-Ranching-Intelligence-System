@@ -23,11 +23,12 @@ def user_login(request):
                 # 数据查询，根据用户名查询出用户的权限
                 authority = User.objects.get(username=data['username']).is_superuser & User.objects.get(username=data['username']).is_staff
                 if authority:
-                    return redirect("SmartCenter")
+                    return redirect("")
                 # return redirect("article:article-list")
                 # return redirect("index") 
                 # return render(request, 'SmartCenter/trend.html', context)
-                # return render(request, 'SmartCenter/your_template.html', {'context_data': data})
+                # return render
+                # (request, 'SmartCenter/your_template.html', {'context_data': data})
                 return redirect("DataCenter") 
 
             else:
