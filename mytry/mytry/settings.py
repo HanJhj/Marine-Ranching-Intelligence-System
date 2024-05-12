@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'userprofile',
     'captcha',
     'SmartCenter',
+    'MainInformation',
+    'BackManage',
+    'DataCenter',
+    'UnderWater',
 ]
 
 MIDDLEWARE = [

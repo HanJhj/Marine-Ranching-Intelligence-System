@@ -5,5 +5,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.SmartCenter, name='SmartCenter'),  # 空路径（即/learn/）将会调用learn应用的index视图
+    path('SmartCenter/', views.SmartCenter, name='SmartCenter'),  
+    path('SmartCenter_user/', views.SmartCenter_user, name='SmartCenter_user'),  
+
 ]

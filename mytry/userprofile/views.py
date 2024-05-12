@@ -1,4 +1,3 @@
-
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -24,7 +23,15 @@ def user_login(request):
                 # return redirect("index") 
                 # return render(request, 'SmartCenter/trend.html', context)
                 # return render(request, 'SmartCenter/your_template.html', {'context_data': data})
-                return redirect("SmartCenter") 
+                # 数据查询，根据用户名查询出用户的权限
+                authority = User.objects.get(username=data['username']).is_superuser & User.objects.get(username=data['username']).is_staff
+                if authority:
+                    # return redirect("BackManage") 
+                    return redirect("SmartCenter") 
+                    
+                else:
+                    # return redirect("MainInformation")
+                    return redirect("SmartCenter_user") 
 
             else:
                 context = {'obj': login_form, 'error': '账号或密码错误，请重新输入！'}
