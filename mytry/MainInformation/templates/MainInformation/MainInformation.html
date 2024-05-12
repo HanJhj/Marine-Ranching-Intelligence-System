@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主要信息</title>
-    <link href="{% static 'MainInformation/css/common.css' %}" rel="stylesheet">
+    <title>海洋牧场可视化系统</title>
+    <link href="{% static 'MainInformation/css/common.css' %}" rel="stylesheet" type="text/css">
     <script src="{% static 'MainInformation/js/Plugin/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'MainInformation/js/Plugin/echarts.min.js' %}"></script>
     <script src="{% static 'MainInformation/js/Plugin/bmap.min.js' %}"></script>
@@ -18,23 +18,67 @@
     <div class="left nav">
         <ul>
             <li class="nav_active"><i class="nav_1"></i><a href="{% url 'MainInformation' %}">主要信息</a></li>
-            <li><i class="nav_2"></i><a href="quota.html">水下系统</a></li>
-            <li><i class="nav_3"></i><a href="trend.html">数据中心</a></li>
-            <li><i class="nav_4"></i><a href="chronic.html">智能中心</a></li>
-            <li><i class="nav_5"></i><a href="chronic.html">后台管理</a></li>
+            <li><i class="nav_2"></i><a href="{% url 'UnderWater' %}">水下系统</a></li>
+            <li><i class="nav_3"></i><a href="{% url 'DataCenter' %}">数据中心</a></li>
+            <li><i class="nav_4"></i><a href="{% url 'SmartCenter' %}">智能中心</a></li>
+            <li><i class="nav_5"></i><a href="{% url 'BackManage' %}">管理中心</a></li>
           </ul>
     </div>
     <div class="header_center left" style="position:relative">
-        <h2><strong>海洋牧场监控可视化系统</strong></h2>
+        <h2><strong>海 洋 牧 场 可 视 化 系 统</strong></h2>
 
     </div>
-    <div class="right nav text_right">
-        <ul>
+    <div class="right showTime text_right"></div>
 
-        </ul>
-    </div>
+<script>
+function updateTime() {
+    var dt = new Date();  
+    var y = dt.getFullYear();  
+    var mt = dt.getMonth() + 1;  
+    var day = dt.getDate();  
+    var h = dt.getHours(); // 获取时  
+    var m = dt.getMinutes(); // 获取分  
+    var s = dt.getSeconds(); // 获取秒  
+
+    // 为了确保月份、日期、小时、分钟和秒都是两位数  
+    mt = mt < 10 ? '0' + mt : mt;  
+    day = day < 10 ? '0' + day : day;  
+    h = h < 10 ? '0' + h : h;  
+    m = m < 10 ? '0' + m : m;  
+    s = s < 10 ? '0' + s : s;  
+
+    // 更新显示时间  
+    document.querySelector(".showTime").innerHTML =  
+        "日期：" +  
+        y +  
+        "年" +  
+        mt +  
+        "月" +  
+        day +  
+        "日" +
+        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+  
+        "时间：" +  
+        h +  
+        "时" +  
+        m +  
+        "分" +  
+        s +  
+        "秒";  
+}
+
+// 立即显示时间
+updateTime();
+
+// 设定定时器，循环运行  
+setInterval(updateTime, 1000);
+</script>
+
+
 
 </header>
+
+
+
 <!--内容部分-->
 <div class="con left">
     <div class="div_any">
@@ -52,10 +96,10 @@
                 </div>
                 
                 <div class="video-container">
-                    <video id="video1" src="{% static 'MainInformation/videos/video1.mp4' %}" loop></video>
-                    <video id="video2" src="{% static 'MainInformation/videos/video2.mp4' %}" loop></video>
-                    <video id="video3" src="{% static 'MainInformation/videos/video3.mp4' %}" loop></video>
-                    <video id="video4" src="{% static 'MainInformation/videos/video4.mp4' %}" loop></video>
+                    <video id="video1" src="{% static 'MainInformation/videos/video1.mp4' %}" loop muted></video>
+                    <video id="video2" src="{% static 'MainInformation/videos/video2.mp4' %}" loop muted></video>
+                    <video id="video3" src="{% static 'MainInformation/videos/video3.mp4' %}" loop muted></video>
+                    <video id="video4" src="{% static 'MainInformation/videos/video4.mp4' %}" loop muted></video>
                 </div>
 
                 
@@ -82,8 +126,8 @@
                 <div id="wrapper"></div>
                 <style>
                     #wrapper{
-                        width: 400px;
-                        height: 250px;
+                        width: 85%;
+                        height: 75%;
                         margin-left: auto;
                         margin-right: auto;
                         display: block;
@@ -102,7 +146,7 @@
                     window.onload = function(){
                         var map = new AMap.Map('wrapper', {
                             zoom: 12,
-                            center: [120.0, 40.0] // 天津渤海湾的经纬度
+                            center: [117.1219, 39.0801] // 天津渤海湾的经纬度
                         });
                         var satelliteLayer = new AMap.TileLayer.Satellite({
                             zIndex: 9
