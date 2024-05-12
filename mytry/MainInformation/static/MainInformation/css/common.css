@@ -104,6 +104,17 @@ a:hover{
    font-size: 22px !important;
 
 }
+
+.showTime{
+    position: absolute;
+    top: 2.5rem;
+    right: 1.25rem;
+    line-height: .2rem;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+}
+
+
 .color_font{
     color: #e8f7fe !important;
     font-size: 12px !important;
@@ -125,7 +136,7 @@ a:hover{
 }
 .nav>ul>li{
     display: inline-block;
-    width: 120px;
+    width: 18%;
     text-align: center;
     height: 50px;
     position: relative;
@@ -1082,14 +1093,14 @@ border-radius: 3px;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  height: 350px; /* 调整视频容器的高度 */
+  height: 40%; /* 调整视频容器的高度 */
   border: 1px solid #034c6a;
 box-sizing: border-box;
 }
 
 .video-container video {
-  width: 500px;
-  height: 375px;
+  width: 90%;
+  height: 90%;
   appearance: none; /* 隐藏视频控制条 */
 }
 
@@ -1104,3 +1115,5 @@ box-sizing: border-box;
 .video-container video::-webkit-media-controls-panel {
   display: none !important; /* 隐藏iOS Safari浏览器下的视频控制条 */
 }
+
+
