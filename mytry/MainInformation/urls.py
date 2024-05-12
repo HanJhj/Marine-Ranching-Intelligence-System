@@ -3,5 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.MainInformation, name='MainInformation'),  # 空路径（即/learn/）将会调用learn应用的index视图
+    path('', views.MainInformation, name='MainInformation'),  
+    path('MainInformation_user/', views.MainInformation_user, name='MainInformation_user'),
 ]
