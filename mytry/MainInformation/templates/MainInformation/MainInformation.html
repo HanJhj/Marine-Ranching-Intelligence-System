@@ -10,6 +10,8 @@
     <script src="{% static 'MainInformation/js/Plugin/bmap.min.js' %}"></script>
     <script src="{% static 'MainInformation/js/common.js' %}"></script>
     <script src="{% static 'MainInformation/js/NCDindex.js' %}"></script>
+    <script src="{% static 'MainInformation/js/echarts.js'%}"></script>
+    
 </head>
 <body>
 
@@ -89,10 +91,10 @@ setInterval(updateTime, 1000);
 
                 <div class="empty-row"></div>
                 <div class="button-container">
-                    <button onclick="changeVideo('video1')" class="blue-button active">监控1</button>
-                    <button onclick="changeVideo('video2')" class="blue-button">监控2</button>
-                    <button onclick="changeVideo('video3')" class="blue-button">监控3</button>
-                    <button onclick="changeVideo('video4')" class="blue-button">监控4</button>
+                    <button id="video1" onclick="changeVideo('video1')" class="blue-button active">监控1</button>
+                    <button id="video2" onclick="changeVideo('video2')" class="blue-button">监控2</button>
+                    <button id="video3" onclick="changeVideo('video3')" class="blue-button">监控3</button>
+                    <button id="video4" onclick="changeVideo('video4')" class="blue-button">监控4</button>
                 </div>
                 
                 <div class="video-container">
@@ -102,14 +104,35 @@ setInterval(updateTime, 1000);
                     <video id="video4" src="{% static 'MainInformation/videos/video4.mp4' %}" loop muted></video>
                 </div>
 
-                
+
+                <div class="table-container">
+                    <div class="table_p" style="height: 85%;margin-top: 0%;">
+                        <table>
+                            <thead><tr>
+                                <th style="font-size: 15;">导入数据工作台</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+    
+                            <tr>
+                                <td>
+                                    <div class="button-container">
+                                        {% csrf_token %}
+                                        <input id="upload" type="file" style="width: 50%" name="file" id="filename" >
+                                        <button class="blue-button active" type="button" onclick="Upload()">导入历史水文数据</button>
+                                    </div> 
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
 
                 
             </div>
 
 
-            
 
 
 
@@ -117,6 +140,7 @@ setInterval(updateTime, 1000);
         <div class="left div_any05">
             <div class="div_any_child">
                 <div class="div_any_title"><img src="{% static 'MainInformation/images/title_1.png' %}">水文气象</div>
+                <div id="histogramChart0" style="width: 90%; height: 100%;margin-left: auto;margin-right: auto;margin-top:5%"></div>
                 
             </div>
             <div class="div_any_child">
@@ -145,8 +169,10 @@ setInterval(updateTime, 1000);
                     //初始化地图插件
                     window.onload = function(){
                         var map = new AMap.Map('wrapper', {
-                            zoom: 12,
-                            center: [117.1219, 39.0801] // 天津渤海湾的经纬度
+                            zoom: 17,
+                            dragEnable: false, // 禁用拖拽功能
+                            zoomEnable: false, // 禁用缩放功能
+                            center: [117.17325638567854, 39.103630700102] // 新开湖
                         });
                         var satelliteLayer = new AMap.TileLayer.Satellite({
                             zIndex: 9
@@ -182,4 +208,207 @@ setInterval(updateTime, 1000);
 
 
 </body>
+
+
+
+<script>
+// 定义颜色数组
+var myColor = ['#1089E7', '#F57474', '#56D0E3', '#F8B448', '#8B78F6'];
+
+// 初始化图表
+var histogramChart0 = echarts.init(document.getElementById('histogramChart0'));
+
+// 定义从数据库获取数据的函数
+function fetchDataFromDatabase(water) {
+    
+    return {
+        yAxisData: ['水温(℃)', 'pH', '溶解氧(mg/L)', '电导率(μS/cm)', '浊度(NTU)', '高锰酸盐(mg/L)','氨氮(mg/L)','总磷(mg/L)','总氮(mg/L)'],
+        seriesData1: water,
+        seriesData2: [17,7.36,9.89,250,53.5,6.41,0.29,0.12,2.02]
+    };
+}
+
+// 获取数据并设置图表选项
+var water_list = [
+        "{{today_water.temperature}}",
+        "{{today_water.ph}}",
+        "{{today_water.dissolved_oxygen}}",
+        "{{today_water.conductivity}}",
+        "{{today_water.turbidity}}",
+        "{{today_water.permanganate_index}}",
+        "{{today_water.ammonia_nitrogen}}",
+        "{{today_water.total_phosphorus}}",
+        "{{today_water.total_nitrogen}}"
+    ];
+var data = fetchDataFromDatabase(water_list);
+histogramChart0.setOption({
+    grid: {
+        top: '10%',
+        left: '40%',
+        right: '20%',
+    },
+    xAxis: {
+        show: false
+    },
+    yAxis: [{
+        show: true,
+        data: data.yAxisData,
+        inverse: true,
+        axisLine: {
+            show: false
+        },
+        splitLine: {
+            show: false
+        },
+        axisTick: {
+            show: false
+        },
+        axisLabel: {
+            color: '#fff',
+            formatter: (value, index) => {
+                return [
+                    `{lg|${index + 1}}  ` + '{title|' + value + '} '
+                ].join('\n')
+            },
+            rich: {
+                lg: {
+                    backgroundColor: '#339911',
+                    color: '#fff',
+                    borderRadius: 15,
+                    align: 'center',
+                    width: 15,
+                    height: 15
+                },
+            }
+        },
+    }, {
+        show: true,
+        inverse: true,
+        data:data.seriesData1,
+        axisLabel: {
+            textStyle: {
+                fontSize: 12,
+                color: '#fff',
+            },
+        },
+        axisLine: {
+            show: false
+        },
+        splitLine: {
+            show: false
+        },
+        axisTick: {
+            show: false
+        },
+    }],
+    series: [{
+        name: '条',
+        type: 'bar',
+        yAxisIndex: 0,
+        data: data.seriesData1.map((value, index) => value / data.seriesData2[index]),
+        barWidth: 10,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 20,
+                color: function(params) {
+                    var num = myColor.length;
+                    return myColor[params.dataIndex % num]
+                },
+            }
+        },
+        label: {
+            normal: {
+                show: false, // 隐藏柱子上的标签
+                position: 'inside',
+                formatter: '{c}%',
+                fontSize: 12,
+            }
+        },
+    }, {
+        name: '框',
+        type: 'bar',
+        yAxisIndex: 1,
+        barGap: '-100%',
+        data: data.seriesData2.map((value, index) => value / data.seriesData2[index]),
+        barWidth: 15,
+        itemStyle: {
+            normal: {
+                color: 'none',
+                borderColor: '#00c1de',
+                borderWidth: 3,
+                barBorderRadius: 15,
+            }
+        }
+    }, ]
+});
+
+
+
+
+function Upload() {
+            var fileInput = document.getElementById('upload').files[0];
+            if (fileInput) {
+                var formData = new FormData();
+                formData.append('file', fileInput);
+                fetch('./upload', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'), // 获取CSRF token
+                    },
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    // 在这里添加页面刷新的代码
+                    location.reload(); 
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert("请选择上传文件！");
+            }
+        }
+
+        // 用于获取CSRF token的辅助函数
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // 获取名为 name 的 cookie 值
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>
