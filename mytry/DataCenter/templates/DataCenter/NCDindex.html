@@ -6,12 +6,22 @@
     <title>数据中心</title>
     <link href="{% static 'DataCenter/css/common.css' %}" rel="stylesheet">
     <script src="{% static 'DataCenter/js/Plugin/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'DataCenter/js/Plugin/echarts.min.js' %}"></script>
+    <script src="{% static 'DataCenter/js/echarts.min.js' %}"></script>
     <!-- <script src="../scripts/Plugin/bmap.min.js"></script> -->
     <!-- <script src="http://api.map.baidu.com/api?v=2.0&ak=LelFSt6BfykGf8m3PB5zr8LaXAG2cMg6"></script> -->
     <script src="{% static 'DataCenter/js/common.js' %}"></script>
-    <script src="{% static 'DataCenter/js/NCDindex.js' %}"></script>
+    <!--script src="{% static 'DataCenter/js/NCDindex.js' %}"></script-->
     <!-- <script src="../scripts/echarts.js"></script> -->
+
+
+    <script src="{% static 'DataCenter/js/echarts.js'%}"></script>
+     <script src="{% static 'DataCenter/js/chain.js'%}"></script>
+     <script src="{% static 'DataCenter/js/jquery-3.5.1.js'%}"></script>
+
+
+
+
+
 </head>
 <body>
 <!--顶部-->
@@ -174,7 +184,8 @@ window.onload = time;
         <div class="div_any02 left ">
             <div class="div_any_child div_height">
                 <div class="div_any_title any_title_width"><img src="{% static 'DataCenter/images/title_0.png' %}">数据中心分布</div>
-                <div id="mapChart" style="width:97.5%;height:95%;display: inline-block;padding-left: 1.25%;padding-top:2.2%"></div>
+
+                <div id="main" style="flex-grow: 1; width: 90%; height: 90%; padding-left: 5.0%; padding-top: 2.0%;"></div>
             </div>
         </div>
         <div class="right div_any01">
@@ -189,7 +200,139 @@ window.onload = time;
         </div>
     </div>
 
-
 </div>
-</body>
+
+
+
+ <script>
+    var myChart = echarts.init(document.getElementById("main"));
+
+$(function() {
+    // 获取表格对象
+    let table = $("#tbody");
+    // 发生ajax请求，到json文件，data为返回的数据，将数据封装到空数组中；直接拿来用即可
+    $.ajax({
+        url: "{% static 'DataCenter/json/Servers.json' %}",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            console.log(data); // 检查返回的数据
+            let res = [];
+            for (let i = 0; i < data.length; i++) {
+                res.push({
+                    name: data[i].name,
+                    value: data[i].value,
+                    sales: data[i].Sales
+                });
+            }
+            dealWithData(res);
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX请求失败: ", status, error); // 检查请求是否失败
+            alert("数据获取失败！");
+        }
+    });
+});
+
+function dealWithData(data) {
+    let dataValue = data;
+    let option = {
+        // 设置一个标题
+        title: {
+            text: '',
+            x: 'center',
+            textStyle: {
+                color: '#fff',
+                fontSize: "40"
+            }
+        },
+        // 鼠标划过省份下弹框
+        tooltip: {
+            show: true,
+            triggerOn: 'click' // 点击生效
+        },
+        geo: {
+            map: 'china', // 必须写
+            roam: false, // 拖拽功能；自选关闭开启
+            zoom: 1.235, // 地图缩放比例
+            center: [105, 36], // 地图位置
+            // 地图省份的样式；包括板块颜色和边框颜色
+            itemStyle: {
+                areaColor: '#e0ffff',
+                borderColor: "#835f5f",
+            },
+            // 省份字体样式；包括是否展示，字体大小和颜色
+            label: {
+                normal: {
+                    show: true,
+                    fontSize: "11",
+                    color: "rgb(128, 0, 128)",
+                    fontWeight: 'bold'
+                }
+            },
+            // 鼠标划过的高亮设置；包括省份板块颜色和字体等
+            emphasis: {
+                itemStyle: {
+                    areaColor: '#d0a3a3',
+                },
+                label: {
+                    show: true,
+                    color: "rgb(255,255,255)"
+                }
+            }
+        },
+        series: [
+            // 涟漪特效
+            {
+                name: "数据中心",
+                type: "effectScatter",
+                coordinateSystem: "geo",
+                data: dataValue, // 传入的地图点数据
+                symbolSize: 6, // 涟漪大小
+                showEffectOn: "render",
+                // 涟漪效应
+                rippleEffect: {
+                    brushType: "stroke",
+                    color: "#f13434",
+                    period: 10, // 周期
+                    scale: 10 // 规模
+                },
+                hoverAnimation: true, // 悬停动画
+                // 地图点样式
+                label: {
+                    formatter: "{b}",
+                    position: "top",
+                    show: true,
+                    fontSize: "10",
+                },
+                itemStyle: {
+                    color: "#f13434",
+                    shadowBlur: 2,
+                    shadowColor: "#333"
+                },
+                // 鼠标点击散点的下弹框
+                tooltip: {
+                    show: true,
+                    triggerOn: "click",
+                    formatter: function(data1) {
+                        console.log(data1);
+                        let data2 = data1.data;
+                        return "<b>数据中心<b><br>" + data2.name + data2.sales;
+                    }
+                },
+                zlevel: 1
+            }
+        ]
+    };
+    myChart.setOption(option);
+}
+
+
+
+ </script>
+
+
+
+
+
 </html>
