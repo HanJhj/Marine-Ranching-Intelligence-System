@@ -80,66 +80,34 @@
 <div class="con left" style="width: 49%;">
     <div class="div_any_child">
         <div class="div_any_title"><img src="../static/BackManage/images/title_4.png">用户列表</div>
-        <input type="text" placeholder="请输入用户名" style="width: 180px;height: 28px;border-radius: 3px;text-indent: 1em;border: 1px solid#4b8df8;color: #fff;margin-left: 30px; margin-top: 45px;" /><button class="btn btn-primary btn-sm" style="margin-left:20px"><span class="glyphicon glyphicon-search"></span>查询</button>
-        <div class="table-container">
-            <div class="table_p" style="height: 85%;margin-top: 20px;">
+        <div class="table-container" style="height: 90%; margin-top: 3.5%;overflow: auto;">
+            <div class="table_p" style="height: 85%;margin-top: 0%;">
                 <table>
                     <thead><tr>
                         <th>用户名</th>
                         <th>邮箱</th>
-                        <th>密码</th>
+                        <!-- <th>密码</th> -->
                         <th>管理员权限</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>test511</td>
-                            <td>123@qq.com</td>
-                            <td>hhhhh</td>
-                            <td>
-                                <!-- 使用label和input元素来创建滑动开关按钮 -->
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </td>
-                        </tr>
 
                         <!-- 加后端用来读取数据库 -->
-                        <!-- {% for user in users %}
+                        {% for user in users %}
                         <tr>
                             <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.password }}</td>
+                            <!-- <td>{{ user.password }}</td> -->
                             <td>
                                 <label class="switch">
-                                    <input type="checkbox" {% if user.is_admin %}checked{% endif %}>
+                                    <input type="checkbox" onclick="Change('{{user.id}}')" {% if user.is_staff and user.is_superuser %}checked{% endif %}>
                                     <span class="slider"></span>
                                 </label>
                             </td>
                         </tr>
-                        {% endfor %} -->
+                        {% endfor %} 
 
-                        <tr><td>1</td><td>萝卜1</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>2</td><td>萝卜2</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>3</td><td>萝卜3</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>4</td><td>萝卜4</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>5</td><td>萝卜5</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>6</td><td>萝卜6</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>7</td><td>萝卜7</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>8</td><td>萝卜8</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>9</td><td>萝卜9</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>10</td><td>萝卜0</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>1</td><td>萝卜1</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>2</td><td>萝卜2</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>3</td><td>萝卜3</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>4</td><td>萝卜4</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>5</td><td>萝卜5</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>6</td><td>萝卜6</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>7</td><td>萝卜7</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>8</td><td>萝卜8</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>9</td><td>萝卜9</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>10</td><td>萝卜0</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+                        
                         
                     </tbody>
                 </table>
@@ -150,50 +118,83 @@
     </div>
 </div>
 
-<div class="con right" style="width: 49%">
-
+<div class="con right" style="width: 49%;">
     <div class="div_any_child">
-        <div class="div_any_title"><img src="../static/BackManage/images/title_13.png">设备列表</div>
-        <input type="text" placeholder="请输入设备名称" style="width: 180px;height: 28px;border-radius: 3px;text-indent: 1em;border: 1px solid#4b8df8;color: #fff;margin-left: 30px; margin-top: 45px;" /><button class="btn btn-primary btn-sm" style="margin-left:20px"><span class="glyphicon glyphicon-search"></span>查询</button>
-            <div class="table-container">
-                <div class="table_p" style="height: 85%;margin-top: 20px;">
+        <div class="div_any_title" ><img src="../static/BackManage/images/title_13.png">设备列表</div>
+            <div class="table-container" style="height: 90%; margin-top: 3.5%;overflow-y: auto;">
+                <div class="table_p" style="height: 85%;margin-top: 0%;">
                     <table>
                         <thead><tr>
                             <th>ID</th>
                             <th>类型</th>
                             <th>状态</th>
-                            <th>辅助功能</th>
+                            <th>描述信息</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr><td>1</td><td>萝卜1</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>2</td><td>萝卜2</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>3</td><td>萝卜3</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>4</td><td>萝卜4</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>5</td><td>萝卜5</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>6</td><td>萝卜6</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>7</td><td>萝卜7</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>8</td><td>萝卜8</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>9</td><td>萝卜9</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>10</td><td>萝卜0</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>1</td><td>萝卜1</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>2</td><td>萝卜2</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>3</td><td>萝卜3</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>4</td><td>萝卜4</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>5</td><td>萝卜5</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>6</td><td>萝卜6</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>7</td><td>萝卜7</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>8</td><td>萝卜8</td><td>糖尿病</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
-                        <tr><td>9</td><td>萝卜9</td><td>高血压</td><td><button class="btn btn-primary btn-sm">查看</button></td></tr>
+
+                        <!-- 加后端用来读取数据库 -->
+                        {% for device in devices %}
+                        <tr>
+                            <td>{{ device.id }}</td>
+                            <td>{{ device.type }}</td>
+                            <td>{{ device.status }}</td>
+                            <td style="word-wrap: break-word;">
+                                {{ device.description }}
+                            </td>
+                            
+                        </tr>
+                        {% endfor %} 
                         </tbody>
                     </table>
                 </div>
-                <!-- <div class="box">
-                    <div id="pagination" class="page fl"></div> -->
+                
             </div>
         </div>
     </div>
 </div>
 
 </body>
+
+
+
+<script>
+    function Change(id){
+            var formData = new FormData();
+            formData.append('id', id);
+            fetch('./grant', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'), // 获取CSRF token
+                },
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // 在这里添加页面刷新的代码
+                //location.reload(); 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        }
+
+    // 用于获取CSRF token的辅助函数
+    function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // 获取名为 name 的 cookie 值
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+</script>
 </html>
