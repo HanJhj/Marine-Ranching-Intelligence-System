@@ -5,7 +5,8 @@ from django.shortcuts import render
 from .models import Fish
 # Create your views here.
 from django.db.models import Count
-
+from django.http import HttpResponse
+import csv
 def UnderWater(request):
     all_fish = Fish.objects.all()
     # 鱼群总量
@@ -42,4 +43,20 @@ def UnderWater_user(request):
     context = {'title': 'My Page Title'}  # 数据字典
     # return render(request, '/templates/trend.html', context)  # 使用模板
     return render(request, 'UnderWater/UnderWater_user.html', context)
+
+def generate_csv(request):
+    # 获取数据库中的数据
+    data = Fish.objects.all()
+
+    # 创建一个CSV文件
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="fish_data.csv"'
+
+    # 写入CSV文件头部
+    writer = csv.writer(response)
+    writer.writerow(['Species', 'Weight', 'Length1', 'Length2','Length3','Height','Width'])
+    for fish in data:
+        writer.writerow([fish.Species, fish.Weight, fish.Length1, fish.Length2, fish.Length3, fish.Height, fish.Width])
+    # 返回生成的CSV数据
+    return response
 
