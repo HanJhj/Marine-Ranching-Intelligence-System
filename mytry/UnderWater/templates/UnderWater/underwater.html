@@ -126,10 +126,41 @@
             </div>
         </div>
         
-        <!--鱼群数量历史曲线-->
+        <!--文件下载-->
         <div class="left div_any01" style="width: 98%;">
             <div class="div_any_child" style="height: 360px;">
-                <div class="div_any_title">鱼群个体数量历史曲线</div>
+                <div class="div_any_title">数据下载</div>
+                    <!-- 插入文本 -->
+                    <span style="font-size: larger; color: white; font-weight: bold; font-style: italic;">请点击按钮下载鱼群相关数据~</span>
+                    <!-- <button id ="download-button"> Download CSV </button> -->
+                    <button class="download-btn" id="download-button" style="display: block; margin: 20px auto 0;"> Download CSV </button>
+                    <script>
+                        var downloadButton = document.getElementById('download-button');
+                        downloadButton.addEventListener('click', function() {
+                            // 发送AJAX请求获取数据
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('GET', '/download_data/', true);
+                            xhr.responseType = 'blob';
+                            xhr.onload = function() {
+                                //将相应内容转化为可下载的URL
+                                var blog = xhr.response;
+                                var url = window.URL.createObjectURL(blog);
+                                //创建一个隐藏的<a>元素，并将可下载 的URL赋值给 它的href属性
+                                var a = document.createElement('a');
+                                a.href = url;
+                                a.download = 'fish_data.csv';
+                                //将<a>元素添加到DOM中
+                                document.body.appendChild(a);
+                                //模拟点击
+                                a.click();
+                                //清理URL对象
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(url);
+                            };
+                            xhr.send();
+
+                        });
+                    </script>
             </div>
         </div>
   
@@ -157,7 +188,7 @@
         <div class="div_any_child" style="width:98%;position:relative;height: 360px;">
             <div class="div_any_title">鱼群属性</div>
             
-             
+
                 <!-- 曲线 -->
                 <div class="wave-container">
                     <div id="fishPropertyChart" style="width: 100%; height: 300px;"></div> 
@@ -208,7 +239,7 @@
                                         }]
                                     };
                                     // 应用配置到图表
-                                     chart.setOption(option);
+                                    chart.setOption(option);
                                 }
                             
                                 // 绑定按钮点击事件
@@ -216,18 +247,23 @@
                                     button.addEventListener('click', function() {
                                         let species = this.getAttribute('data-species');
                                         updateChartBySpecies(species);
+                                        document.querySelectorAll('.fish-buttons .btn').forEach(btn => btn.classList.remove('active'));
+                                        this.classList.add('active');
                                     });
                                 });
                                 // 初始化图表，默认显示第一个鱼种（例如Bream）
                                 updateChartBySpecies(Object.keys(fishWeights)[0]);
+                                document.querySelectorAll('.fish-buttons .btn')[0].classList.add('active');
                             });
                      
                         </script>
                     </div>
                 </div >
+
                    <!-- 按钮 -->
-                <div class="fish-buttons">
-                    <button class="btn" data-species="Bream">Bream重量分布</button>
+                   <div class="fish-buttons">
+                    <!-- <div id="fishPropertyChart" style="width: 100%; height: 60px;"></div>  -->
+                    <button class="btn btn-1" data-species="Bream">Bream重量分布</button>
                     <button class="btn btn-2" data-species="Roach">Roach重量分布</button>
                     <button class="btn btn-3" data-species="Whitefish">Whitefish重量分布</button>
                     <button class="btn btn-4" data-species="Parkki">Parkki重量分布</button>
@@ -235,6 +271,7 @@
                     <button class="btn btn-6" data-species="Pike">Pike重量分布</button>
                     <button class="btn btn-7" data-species="Smelt">Smelt重量分布</button>
                 </div>
+
 
                     
                 
