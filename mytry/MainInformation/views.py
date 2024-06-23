@@ -6,15 +6,33 @@ from .models import Water
 
 
 def MainInformation(request):
-    water = Water.objects.get(time = '2024-06-22 00:00:00')
-    all_water = Water.objects.all()
+    try:
+        water = Water.objects.get(time__startswith='2024-06-22')
+    except Water.DoesNotExist:
+        water = None
+    
+    all_water = Water.objects.all().order_by('-time')
+    water_num = all_water.count()
+    if not all_water:
+        all_water = None
     context = {'today_water': water,
-               'all_water': all_water}
+               'all_water': all_water,
+               'water_num': water_num}
     return render(request, 'MainInformation/MainInformation.html', context)
 
 def MainInformation_user(request):
-    context = {'title': 'My Page Title'}  # 数据字典
-    # return render(request, '/templates/trend.html', context)  # 使用模板
+    try:
+        water = Water.objects.get(time__startswith='2024-06-22')
+    except Water.DoesNotExist:
+        water = None
+    
+    all_water = Water.objects.all().order_by('-time')
+    water_num = all_water.count()
+    if not all_water:
+        all_water = None
+    context = {'today_water': water,
+               'all_water': all_water,
+               'water_num': water_num}
     return render(request, 'MainInformation/MainInformation_user.html', context)
 
 def insert_water_data(time, water_type, temperature, ph, dissolved_oxygen, conductivity, 
