@@ -131,7 +131,11 @@
             <div class="div_any_child" style="height: 360px;">
                 <div class="div_any_title">数据下载</div>
                     <!-- 插入文本 -->
-                    <span style="font-size: larger; color: white; font-weight: bold; font-style: italic;">请点击按钮下载鱼群相关数据~</span>
+                    <!-- <span style="font-size: larger; color: white; font-weight: bold; font-style: italic;">请点击按钮下载鱼群相关数据~</span> -->
+                     <!-- GIF图片插入 -->
+                    <div style="text-align:center; margin: 20px 0;">
+                        <img src="{% static 'UnderWater/images/download.gif' %}" alt="加载中..." style="max-width:100%; height:auto;">
+                    </div>
                     <!-- <button id ="download-button"> Download CSV </button> -->
                     <button class="download-btn" id="download-button" style="display: block; margin: 20px auto 0;"> Download CSV </button>
                     <script>
