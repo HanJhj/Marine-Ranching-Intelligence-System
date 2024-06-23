@@ -1028,3 +1028,94 @@ border-radius: 3px;
 .popBox .ttBox{height: 30px; line-height: 30px; padding: 14px 30px; border-bottom: solid 1px #eef0f1;text-align: center;-webkit-box-sizing: content-box;  -moz-box-sizing: content-box;box-sizing: content-box;}
 .popBox .ttBox .tt{font-size: 20px; display: inline-block;  height: 30px;}
 .popBox .txtBox{height: calc(100% - 80px);overflow: auto;padding: 10px 0;}
+
+
+/* 为按钮容器设置相对定位，以便按钮能相对于此容器定位 */
+.left.div_any_child {
+    position: relative;
+}
+
+/* 为包含曲线的容器添加相对定位，以便按钮能相对于此容器定位 */
+.wave-container {
+    position: relative;
+}
+
+/* 将按钮容器定位到底部并居中 */
+.fish-buttons {
+    position: absolute;
+    bottom: 15px;
+
+    width: 100%; /* 使按钮容器宽度与上级容器相同 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    gap: 10px; /* 按钮间间距，可按需调整 */
+    flex-wrap: nowrap; /* 防止按钮换行 */
+}
+.fish-buttons .btn {
+    background-color: #4c87af; /* 蓝色 */
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block; /* 确保这一行未被注释 */
+    font-size: 16px;
+    margin: 1px 2px;
+    cursor: pointer; /* 鼠标悬停时变为手指形状 */
+
+    border-radius: 12px; /* 设置圆角半径 */
+    overflow: hidden; /* 防止按钮溢出容器 */
+}
+/* 可选：鼠标悬停时的按钮颜色变化 */
+.btn:hover {
+    background-color: #336ca5; /* 更深的蓝色 */
+}
+/* 添加激活状态样式 */
+.fish-buttons .btn.active {
+    background-color: #336ca5; /* 更深的蓝色，表示激活状态 */
+    /* 可以根据需要添加更多的样式变化，如改变边框、阴影等 */
+}
+
+/* 可选：增加过渡效果，使按钮状态变化更平滑 */
+.fish-buttons .btn {
+    transition: background-color 0.3s ease;
+}
+
+
+.div_any_child {
+    position: relative;
+}
+
+.div_any_child span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.download-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    flex-wrap: nowrap; /* 防止按钮换行 */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4c87af;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px; /* 设置圆角半径 */
+    overflow: hidden; /* 防止按钮溢出容器 */
+}
+
+.download-btn:hover {
+    background-color: #336ca5;
+}
+
+.download-btn:active {
+    background-color: #285589;
+}
