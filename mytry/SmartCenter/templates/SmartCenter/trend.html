@@ -12,7 +12,7 @@
 
     <!-- <link rel="css" href="{% static 'SmartCenter/css/common.css' %}"> -->
     <link rel="stylesheet" type="text/css" href="{% static 'SmartCenter/css/common.css' %}">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- <link href="/static/css/common.css" rel="stylesheet" type="text/css" media="all" /> -->
 
     <!-- <script src="/static/js/Plugin/jquery-3.3.1.min.js"></script>
@@ -111,39 +111,132 @@
                     </div>
                 </div>
             </div>
-            <div class="left div_any01" style="width:48%;">
-              <div class="div_any_child" style="height: 420px;">
-                  <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_14.png' %}" alt="Example Image">网衣/鱼群监测</div>
-                  <p id="histogramChart2" class="p_chart" style="height: 400px;"></p>
-    
-              </div>
-            </div>
-              <div class="left div_table_box" style="width: 48%;">
+
+
+
+
+
+
+              <div class="left div_table_box" style="width: 100%;display: flex;">
                   <div class="div_any_child" style="height: 420px;">
                       <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_16.png' %}" alt="Example Image">气象数据</div>
+                      <head> <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                        }
+                
+                        .container {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 20px;
+                        }
+                
+                        .text-container {
+                            max-width: 50%;
+                        }
+                
+                        .image-container {
+                            min-width: 10%;
+                        }
+                
+                        .title {
+                            font-size: 24px;
+                            margin-bottom: 10px;
+                        }
+                
+                        .description {
+                            font-size: 16px;
+                            margin-bottom: 20px;
+                        }
+                
+                        img {
+                            max-width: 100%;
+                        }
+                    </style></head>
+                     
+                     <body>
+                        <div class="container">
+                            <div class="text-container">
+                                <style>
+                                    /* 添加内联样式 */
+                                    .weather-text {
+                                        color: white; /* 更改字体颜色为白色 */
+                                        text-align: center; /* 居中对齐 */
+                                        line-height: 2; /* 行距 */
+                                    }
+                                </style>
+                                <h1 class="weather-text">{{ city|default:"" }} 的实时天气</h1>
+                                {% if error_message %}
+                                    <p class="weather-text">{{ error_message }}</p>
+                                {% else %}
+
+                                    <p class="weather-text">温度: {{ temperature|default:"" }} °C</p>
+                                    <p class="weather-text">天气状况: {{ description|default:"" }}</p>
+                                    <p class="weather-text">湿度: {{ humidity|default:"" }}%</p>
+                                    <p class="weather-text">风速: {{ wind_speed|default:"" }} 米/秒</p>
+                                    <!-- <p class="weather-text">来源:https://openweathermap.org/</p> -->
+                                    <p class="weather-text">来源: <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+                    
+                                {% endif %}
+                                <!-- <div class="title">Tianjin 的实时天气</div>
+                                <div class="description">温度：27.97°C</div>
+                                <div class="description">天气状况：晴</div>
+                                <div class="description">湿度：47%</div>
+                                <div class="description">风速：4米/秒</div>
+                                <div class="description">来源：<a href="https://openweathermap.org/">https://openweathermap.org/</a></div> -->
+                            </div>
+                            <div class="image-container">
+                                <canvas id="weatherChart" width="400" height="400"></canvas>
+                              <script>
+                                // 确保页面加载完成后再执行此脚本
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // 从Django模板上下文中获取数据
+                                    var temperature = {{ temperature|safe }};
+                                    var humidity = {{ humidity|safe }};
+                                    var windSpeed = {{ wind_speed|safe }};
+                            
+                                    // 初始化图表
+                                    var ctx = document.getElementById('weatherChart').getContext('2d');
+                                    var weatherChart = new Chart(ctx, {
+                                        type: 'bar', // 或者'doughnut', 'line', 'pie'等，根据需要选择图表类型
+                                        data: {
+                                            labels: ['温度', '湿度', '风速'],
+                                            datasets: [{
+                                                label: '当前天气状况',
+                                                data: [temperature, humidity, windSpeed],
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                ],
+                                                borderWidth: 1,
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+                            </div>
+                        </div>
+                    </body>
+
+
 
                       
-                      <div class="table_p">
-                          <table>
-                              <thead><tr>
-                                  <!-- <th>序号</th>
-                                  <th>内容</th>
-                                  <th>发布时间</th> -->
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <!-- <tr><td>1</td><td>9月21日感染性腹泻发病：123人次</td><td>2018-11-05</td></tr>
-                              <tr><td>2</td><td>9月20日流行性感冒：57人次</td><td>2018-11-03</td></tr>
-                              <tr><td>3</td><td>9月19日:手足口病发病同比增长220%</td><td>2018-11-01</td></tr>
-                              <tr><td>4</td><td>9月18日登革热死亡:2人</td><td>2018-10-29</td></tr>
-                              <tr><td>5</td><td>9月17日流行性感冒：157人次</td><td>2018-10-27</td></tr>
-                              <tr><td>6</td><td>9月15日全区传染病发病人数较低</td><td>2018-10-25</td></tr>
-                              <tr><td>7</td><td>9月14日流行性感冒：157人次</td><td>2018-10-23</td></tr>
-                              <tr><td>8</td><td>9月13日全区传染病发病人数较低</td><td>2018-10-21</td></tr>
-                              <tr><td>9</td><td>9月12日流行性感冒：157人次</td><td>2018-10-20</td></tr> -->
-                              </tbody>
-                          </table>
-                      </div>
                   </div>
               </div>
           </div>
