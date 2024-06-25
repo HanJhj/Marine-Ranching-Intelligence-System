@@ -13,12 +13,46 @@
     <!-- <link rel="css" href="{% static 'SmartCenter/css/common.css' %}"> -->
     <link rel="stylesheet" type="text/css" href="{% static 'SmartCenter/css/common.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- <link href="/static/css/common.css" rel="stylesheet" type="text/css" media="all" /> -->
-
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.2/echarts.min.js"></script>
     <!-- <script src="/static/js/Plugin/jquery-3.3.1.min.js"></script>
     <script src="/static/js/Plugin/echarts.min.js"></script>
     <script src="/static/js/common.js"></script>
     <script src="/static/js/trend.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #text-container1 {
+            position: absolute;
+            top: 65%; /* 调整这个值，使得文本上移并进入红色框内 */
+            left: 0; /* 对齐左侧 */
+            width: 100%; /* 占满宽度 */
+            text-align: center; /* 文本居中显示 */
+
+            .alert-icon {
+            font-size: 32px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .warning {
+            color: red;
+            font-size: 28px;
+        }
+        .normal {
+            color: blue;
+            font-size: 48px;
+        }
+
+        /* 增大警告图标和文字的大小 */
+        .alert-icon {
+            font-size: 48px; /* 根据需要调整大小 */
+        }
+
+        .warning, .normal {
+            font-size: 48px; /* 调整警告和正常信息的文字大小 */
+        }
+        }
+    </style>
 </head>
 <body>
     <!--顶部-->
@@ -92,27 +126,213 @@
     <div class="con left" style="width:50%;">
         <!--统计分析图-->
         <div class="div_any">
+
+
+
             <div class="left div_any01" style="width:100%;">
                 <div class="div_any_child" style="width:98%;position:relative;height: 420px;">
-                    <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_13.png' %}" alt="Example Image">海洋牧场环境感知得分</div>
-                    <!-- <div id="histogramChart1"  style="width: 45%;display: inline-block;height: 400px;margin-top: 15px;"></div>
-                    <div id="lineChart1"  style="width: 52%;height: 66%;display: inline-block;"></div> -->
-                    <div style="width: 50%;height: 20%;display: inline-block;color:red;position: absolute;right: 2%;top: 8%;">
-                      <div style="display: inline-block;width:33%;text-align:center;">
-                        <div style="color:#fff;font-size: 18px;line-height: 32px;">水质得分</div>
-                        <div style="color:#87cefa;font-size: 30px;line-height: 42px;">--</div>
-                      </div><div style="display: inline-block;width:33%;text-align:center;">
-                        <div style="color:#fff;font-size: 18px;line-height: 32px;">气象得分</div>
-                        <div style="color:red;font-size: 30px;line-height: 42px;">--</div>
-                      </div><div style="display: inline-block;width:33%;text-align:center;">
-                        <div style="color:#fff;font-size: 18px;line-height: 32px;">生态环境得分</div>
-                        <div style="color:#ff7f50;font-size: 30px;line-height: 42px;">--</div>
-                      </div>
+                    <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_13.png' %}" alt="Example Image">海洋牧场环境感知得分及预警</div>
+                        <div id="chartContainer" style="width: 60%; height: 100%;float:left"></div>  <!-- 图表容器，占据60%宽度 -->
+                            <div id="text-container3"style="width: 100%; height: 80%;"></div>
+                            <script>
+                                // DOM 加载完成后执行此函数，确保在操作 DOM 时它们已经被加载
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    // 基于准备好的dom，初始化echarts实例
+                                    var myChart = echarts.init(document.getElementById('chartContainer'));
+                                    // ECharts配置选项
+                                    var option = {
+                                        // ...（你的图表配置选项）
+                                        // 请在此处粘贴上面你给出的option配置代码
+                                        series: [
+                                            {
+                                                backgroundColor: 'pink',
+                                                name: '内层数据刻度',
+                                                type: 'gauge',
+                                                // 外层渐变加刻度修改大小  如改这个配置   请同步修改内圈及指针
+                                                radius: '80%',
+                                                // 最大最小值
+                                                min: 0,
+                                                max: 100,
+                                        
+                                                center: ['50%', '50%'],
+                                                startAngle: 186,
+                                                endAngle: -6,
+                                        
+                                                // 刻度分割比例
+                                                splitNumber: 10,
+                                        
+                                                // 设置外侧背景色
+                                                axisLine: {
+                                                    show: true,
+                                                    //  圆角
+                                                    roundCap: true,
+                                                    lineStyle: {
+                                                    width: 12,
+                                                    // 颜色渐变
+                                                    color: [
+                                                        [1, new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                                            {
+                                                                offset: 0.1,
+                                                                color: "#DB7E41"
+                                                            },
+                                                            {
+                                                                offset: 0.8,
+                                                                color: "#7CAEFF"
+                                                            },
+                                                            {
+                                                                offset: 1,
+                                                                color: "#58BF7C"
+                                                            }
+                                                        ])
+                                                        ]
+                                                    ]
+                                                    },
+                                                },
+                                        
+                                                // 修改刻度线样式
+                                                axisTick: {
+                                                    show: true,
+                                                    splitNumber: 100,
+                                                    // 刻度长度(宽)
+                                                    length: 60,
+                                                    // 距离渐变色圈的位置比
+                                                    distance: 0,
+                                                    //  变成粉色背景 透明度越高, 刻度线就不会显示出来 
+                                                    lineStyle: {
+                                                    color: 'rgba(254, 69, 27, 0.06)',
+                                                    opacity: 0.2,
+                                        
+                                                    }
+                                                },
+                                                splitLine: {
+                                                    show: false,
+                                                },
+                                                // 刻度文字 配置
+                                                axisLabel: {
+                                                    // 距离渐变色圈的位置比
+                                                    distance: 10,
+                                                    fontSize: 18,
+                                                    color: 'red'
+                                                },
+                                                // 指针配置
+                                                pointer: {
+                                                    // 指针长度
+                                                    length: '55',
+                                                    // 指针形状
+                                                    icon: 'triangle',
+                                                    width: 6,
+                                                    // 指针位置 5.0.1 支持
+                                                    offsetCenter: [0, '-40%'],
+                                                    // 指针样式配置对象
+                                                    itemStyle: {
+                                                    color: 'rgba(124, 174, 255, 1)',
+                                                    },
+                                                },
+                                                // 中间文字配置
+                                                detail: {
+                                                    offsetCenter: ['0%', '0%'],
+                                                    color: 'rgba(124, 174, 255, 1)',
+                                                    fontSize: 30,
+                                                    fontFamily: 'DIN-Regular'
+                                                },
+                                                data: [
+                                                    {
+                                                    // value: 40,
+                                                    value: {{ score|safe }},
+
+                                                    },
+                                                ],
+                                            },
+                                            {   
+                                                name: '最内层线',
+                                                type: 'gauge',
+                                                // 外层修改 这个需同步修改
+                                                radius: '70%',
+                                        
+                                                center: ['50%', '50%'],
+                                                startAngle: 186,
+                                                endAngle: -6,
+                                        
+                                                splitLine: {
+                                                    show: false,
+                                                },
+                                                axisLabel: {
+                                                    show: false,
+                                                },
+                                                // 线的修改
+                                                axisLine: {
+                                                    show: true,
+                                                    lineStyle: {
+                                                    color: [[1, 'rgba(254, 69, 27, 0.06)']],
+                                                    // 宽度  指针覆盖的那个
+                                                    width: 80,
+                                                    opacity: 0.5,
+                                                    },
+                                                },
+                                                axisTick: {
+                                                    show: false,
+                                                },
+                                                pointer: {
+                                                    show: false,
+                                                },
+                                                detail: {
+                                                    show: false,
+                                                },
+                                                data: [
+                                                    {
+                                                    // value: 40,
+
+                                                    value: {{ score|safe }},
+                                                    },
+                                                ],
+                                            },
+                                        ],
+
+                                    };
+                            
+                                    // 使用刚指定的配置项和数据显示图表。
+                                    myChart.setOption(option);
+                                });
+                            </script>
+
+                            <div id="text-container1">
+                                <div id="text-container1">
+                                    {% if warning_oxygen == '是' %}
+                                        <i class="fas fa-exclamation-triangle alert-icon" style="font-size: 54px;color: red;"></i>
+                                        <div class="warning" style="font-size: 48px;color: red;">预警: 溶解氧水平低！</div>
+                                    {% elif warning_temperature == '是' %}
+                                        <!-- 使用elif进行第二个条件判断 -->
+                                        <i class="fas fa-thermometer-half alert-icon" style="font-size: 54px; color: red;"></i>
+                                        <div class="warning" style="font-size: 48px;color: red">预警: 温度过高！</div>
+                                    {% else %}
+                                        <i class="far fa-check-circle alert-icon" style="font-size: 54px; color: green;"></i>
+                                        <div class="normal" style="font-size: 48px;color: green">环境正常</div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                            <div class="text-container2" style="width: 38%; text-align: right; color:rgb(0, 38, 255);"> <!-- 文字容器，占据剩余宽度，右对齐 -->
+                                <h1>最新环境数据</h1>
+                                <p>监测时间: {{ latest_data.monitoring_date }}</p>
+                                <p>水质类别: {{ latest_data.water_quality }}</p>
+                                <p>水温: {{ latest_data.water_temperature }}℃</p>
+                                <p>pH值: {{ latest_data.ph_level }}</p>
+                                <p>溶解氧: {{ latest_data.dissolved_oxygen }}mg/L</p>
+                                <h2>得分: {{ score }}</h2>
+                            </div>
+
+
                     </div>
-                </div>
-            </div>
+
+                
 
 
+                        
+                        <!-- {% if warning_oxygen == '是' %}
+                            <div style="color:red;">**预警: 溶解氧水平低！**</div>
+                            {%else%}
+                            <div style="color:blue;">环境正常</div>
+                        {% endif %} -->
 
 
 
@@ -133,11 +353,18 @@
                         }
                 
                         .text-container {
-                            max-width: 50%;
+                            max-width: 60%;
+                            /* 居中展示 */
+                            margin: 0 auto; /* 水平居中 */
+                            text-align: center; /* 文本内容也居中对齐 */
+
                         }
                 
                         .image-container {
-                            min-width: 10%;
+                            min-width: 30%;
+                            display: flex; /* 使用Flex布局 */
+                            justify-content: center; /* 水平居中 */
+                            align-items: center; /* 垂直居中，假设容器有一个确定的高度 */
                         }
                 
                         .title {
@@ -176,7 +403,7 @@
                                     <p class="weather-text">湿度: {{ humidity|default:"" }}%</p>
                                     <p class="weather-text">风速: {{ wind_speed|default:"" }} 米/秒</p>
                                     <!-- <p class="weather-text">来源:https://openweathermap.org/</p> -->
-                                    <p class="weather-text">来源: <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+                                    <p class="weather-text">数据来源: <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
                     
                                 {% endif %}
                                 <!-- <div class="title">Tianjin 的实时天气</div>
