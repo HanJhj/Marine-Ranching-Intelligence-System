@@ -119,10 +119,6 @@
         <div class="left div_any01" style="width:100%;">
             <div class="div_any_child" style="width:98%;position:relative;height: 400px;">
                 <div class="div_any_title">海洋牧场环境感知得分</div>
-                
-                
-        
-
             </div>
         </div>
         
@@ -132,7 +128,7 @@
                 <div class="div_any_title">数据下载</div>
                     <!-- 插入文本 -->
                     <!-- <span style="font-size: larger; color: white; font-weight: bold; font-style: italic;">请点击按钮下载鱼群相关数据~</span> -->
-                     <!-- GIF图片插入 -->
+                    <!-- GIF图片插入 -->
                     <div style="text-align:center; margin: 20px 0;">
                         <img src="{% static 'UnderWater/images/download.gif' %}" alt="加载中..." style="max-width:100%; height:auto;">
                     </div>
@@ -313,20 +309,35 @@
                         var myChart = echarts.init(document.getElementById('main'));
                         // 获取由视图传递过来的数据
                         var chartData = {{ chart_data|safe }};
-                        myChart.setOption({
-                            series : [{
-                                    name: '鱼群占比',
-                                    type: 'pie',    // 设置图表类型为饼图
-                                    radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
-                                    label: {
-                                        position: 'outside',
-                                        formatter: '{b}:{c} ({d}%)'
-                                    },
+                        // 检查chartData是否为空
+                        if (chartData && chartData.length > 0) {
+                            myChart.setOption({
+                                series : [{
+                                        name: '鱼群占比',
+                                        type: 'pie',    // 设置图表类型为饼图
+                                        radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                                        label: {
+                                            position: 'outside',
+                                            formatter: '{b}:{c} ({d}%)'
+                                        },
 
-                                    data:chartData
-                                }
-                            ]
-                        })
+                                        data:chartData
+                                    }
+                                ]
+                            })
+                        } else {
+                            myChart.clear();
+                            var container = document.getElementById('main');
+                            container.style.position = 'relative'; // 确保容器具有相对定位
+                            var img = document.createElement('img'); // 创建一个img元素
+                            img.style.position = 'absolute'; // 设置图片为绝对定位
+                            img.style.top = '5%'; // 设置图片顶部对齐容器顶部
+                            img.style.left = '5%'; // 设置图片左侧对齐容器左侧
+                            img.style.width = '90%'; // 设置图片宽度为容器的100%
+                            img.style.height = '90%'; // 设置图片高度为容器的100%
+                            img.src = "{% static 'UnderWater/images/img.jpg' %}"; // 设置图片路径
+                            container.appendChild(img); // 将img元素添加到容器中
+                        }
                     </script>
             </div>
         </div>
