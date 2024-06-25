@@ -15,8 +15,23 @@ def user_login(request):
     else:
         login_form = LoginForm(data=request.POST)
         if login_form.is_valid():
-            data = login_form.cleaned_data
-            user = authenticate(username=data['username'], password=data['password'])
+            # data = login_form.cleaned_data
+            # user = authenticate(username=data['username'], password=data['password'])
+            data = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            user = authenticate(request, username=data, password=password)
+            
+             # 如果使用用户名没有找到用户，尝试邮箱登录
+            if user is None:
+                try:
+                    user_by_email = User.objects.get(email=data)
+                    # 使用邮箱找到用户后，再次尝试认证
+                    user = authenticate(request, username=user_by_email.username, password=password)
+                    authority = (User.objects.get(email=data).is_superuser & User.objects.get(email=data).is_staff)
+                except User.DoesNotExist:
+                    user_by_email = None
+            else:
+                authority = (User.objects.get(username=data).is_superuser & User.objects.get(username=data).is_staff)
             if user:
                 login(request, user)
                 # return redirect("article:article-list")
@@ -24,7 +39,8 @@ def user_login(request):
                 # return render(request, 'SmartCenter/trend.html', context)
                 # return render(request, 'SmartCenter/your_template.html', {'context_data': data})
                 # 数据查询，根据用户名查询出用户的权限
-                authority = User.objects.get(username=data['username']).is_superuser & User.objects.get(username=data['username']).is_staff
+                # authority = (User.objects.get(username=data['username']).is_superuser & User.objects.get(username=data['username']).is_staff)
+
                 if authority:
                     # return redirect("BackManage") 
                     return redirect("MainInformation") 
