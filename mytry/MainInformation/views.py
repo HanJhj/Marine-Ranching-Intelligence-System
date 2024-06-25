@@ -7,7 +7,10 @@ from .models import Water
 
 def MainInformation(request):
     try:
-        water = Water.objects.get(time__startswith='2024-06-22')
+        # 获取今天的数据
+        today = pd.Timestamp.now().strftime('%Y-%m-%d')
+        water = Water.objects.get(time__startswith=today)
+        # water = Water.objects.get(time__startswith='2024-06-22')
     except Water.DoesNotExist:
         water = None
     
@@ -22,7 +25,10 @@ def MainInformation(request):
 
 def MainInformation_user(request):
     try:
-        water = Water.objects.get(time__startswith='2024-06-22')
+        # 获取今天的数据
+        today = pd.Timestamp.now().strftime('%Y-%m-%d')
+        water = Water.objects.get(time__startswith=today)
+        # water = Water.objects.get(time__startswith='2024-06-22')
     except Water.DoesNotExist:
         water = None
     
@@ -44,17 +50,23 @@ def insert_water_data(time, water_type, temperature, ph, dissolved_oxygen, condu
                          total_nitrogen=total_nitrogen)
     
 
-
+def clear_water_data():
+    # 删除Water表中的所有记录
+    Water.objects.all().delete()
+    print("水质数据表已清空。")
 def Upload(request):
     if request.method == 'POST'and len(request.FILES) > 0:
         f = request.FILES['file']
         excel_type = f.name.split('.')[1]
         if excel_type in ['xlsx', 'xls']:
+            clear_water_data()
             data = pd.read_excel(f,
                                  date_format=lambda x: pd.to_datetime(x, format="%Y/%m/%d")
 )
+            times = pd.to_datetime(data.iloc[:,0]).dt.date
             for i in range(len(data)):
-                time = data.iloc[i,0]
+                # time = data.iloc[i,0]
+                time = times.iloc[i]
                 water_type = data.iloc[i,1]
                 temperature = data.iloc[i,2]
                 ph = data.iloc[i,3]
