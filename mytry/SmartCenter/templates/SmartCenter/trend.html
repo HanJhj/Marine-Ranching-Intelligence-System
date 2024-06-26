@@ -349,8 +349,7 @@
                                     <p class="weather-text">湿度: {{ humidity|default:"" }}%</p>
                                     <p class="weather-text">风速: {{ wind_speed|default:"" }} 米/秒</p>
                                     <!-- <p class="weather-text">来源:https://openweathermap.org/</p> -->
-                                    <p class="weather-text">数据来源: <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
-                    
+                                    <p class="weather-text">数据来源: <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>                    
                                 {% endif %}
                                 <!-- <div class="title">Tianjin 的实时天气</div>
                                 <div class="description">温度：27.97°C</div>
@@ -510,9 +509,91 @@
             <div class="left div_any01" style="width:48%;">
                 <div class="div_any_child" style="height: 420px;">
                     <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_18.png' %}" alt="Example Image">识别出鱼的信息</div>
-                    <p id="pieChart1" class="p_chart" style="height: 400px;"></p>
+
+                    <style>
+                        .text-center {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        }
+                        #fishInfoContainer {
+                            width: 90%;
+                            font-family: 'Roboto', sans-serif; /* 使用自定义字体 */
+                            color: white; /* 文字颜色 */
+                            font-size: 25px; /* 字体大小 */
+                            line-height: 2; /* 行高 */
+                            letter-spacing: 0.5px; /* 字母间距 */
+                        }
+                        #refreshFishInfo {
+                            background-color: #336ca5; /* 背景颜色 */
+                            border: none; /* 移除边框 */
+                            color: white; /* 文字颜色 */
+                            padding: 10px 20px; /* 内边距，调整按钮大小 */
+                            text-align: center; /* 文字居中 */
+                            text-decoration: none; /* 移除下划线 */
+                            display: inline-block; /* 保持块级元素特性但允许其他元素与其同行 */
+                            font-size: 16px; /* 字体大小 */
+                            margin: 10px 2px; /* 外边距，微调与其他元素的距离 */
+                            cursor: pointer; /* 鼠标悬停时指针变为手型 */
+                            border-radius: 5px; /* 圆角效果 */
+                            transition: all 0.3s ease; /* 过渡效果，使改变状态时平滑过渡 */
+                            width: 50%; /* 设置一个较窄的宽度，根据需要调整 */
+                            /* margin-top: -10px; 上移按钮，负值会使元素向上移动，正值则向下 */
+                            margin-bottom: 15%; /* 可能需要调整底部外边距以保持布局的和谐 */
+                            margin-left: 20%;
+                        }
+
+                        #refreshFishInfo:hover {
+                            background-color: #0056b3; /* 鼠标悬停时的背景颜色 */
+                        }
+
+                        #refreshFishInfo:active {
+                            transform: scale(0.98); /* 按下时稍微变小，模拟按钮按压效果 */
+                        }
+
+                    </style>
+                                        
+                    <div class="text-center" style="height: 100vh;">
+                    <div class="left div_any01" id="fishInfoContainer" style="width:48%;">
+
+                        <p><strong>编号:</strong> {{ fish.code }}</p>
+                        <p><strong>鱼种:</strong> {{ fish.species }}</p>
+                        <p><strong>体长:</strong> {{ fish.length }} cm</p>
+                        <p><strong>体重:</strong> {{ fish.weight }} g</p>
+
+
+                    </div>
+                    </div>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <button id="refreshFishInfo">识别下一条鱼</button>
+
+                    <script>
+                    $(document).ready(function(){
+                        $("#refreshFishInfo").click(function(){
+                            $.ajax({
+                                url: "{% url 'update_fish' %}", // 确保与urls.py中的name匹配
+                                dataType: 'json',
+                                success: function(data) {
+                                    $("#fishInfoContainer").html(`
+                                        <p><strong>编号:</strong> ${data.code}</p>
+                                        <p><strong>鱼种:</strong> ${data.species}</p>
+                                        <p><strong>体长:</strong> ${data.length} cm</p>
+                                        <p><strong>体重:</strong> ${data.weight} g</p>
+                                    `);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("Error: " + error);
+                                }
+                            });
+                        });
+                    });
+                    </script>
                 </div>
+
+
             </div>
+
+
             <div class="right div_any01" style="width:48%;">
                 <div class="div_any_child" style="height: 420px;">
                     <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_19.png' %}" alt="Example Image">AI决策</div>
