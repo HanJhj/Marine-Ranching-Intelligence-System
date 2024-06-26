@@ -107,13 +107,15 @@ window.onload = time;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
-                        gap: 10px; /* 控制甜甜圈图之间的间距，可以根据需要调整这个值 */
+                        gap: 0px; /* 控制甜甜圈图之间的间距，可以根据需要调整这个值 */
+                        height: 100%;
+                        width: 100%;
                     }
 
                     /* 每个甜甜圈图容器的样式可以进一步定制，这里假设已经定义好了尺寸 */
                     .chart-container {
-                        height: 200px;
-                        width: 200px;
+                        height: 100%;
+                        width: 100%;
                     }
                 </style>
                 <div class="container">
@@ -144,8 +146,11 @@ window.onload = time;
                                 radius: ['40%', '70%'],
                                 avoidLabelOverlap: false,
                                 label: {
-                                    show: false,
-                                    position: 'center'
+                                    show: true,
+                                    position: 'center',
+                                    formatter: '{b}: {d}%', // 显示格式，{b}是数据项名称，{d}是占比百分比
+                                    fontSize: 16,
+                                    fontWeight: 'normal'
                                 },
                                 emphasis: {
                                     label: {
@@ -157,7 +162,8 @@ window.onload = time;
                                 labelLine: {
                                     show: false
                                 },
-                                data: [{value: cpuData, name: 'CPU Usage'}, {value: 100 - cpuData, name: ''}]
+                                data: [{value: cpuData, name: 'CPU Usage'}, {value: 100 - cpuData, name: 'CPU Free'}],
+                                color: ['#FFA500', '#90EE90']
                             }
                         ]
                     };
@@ -168,20 +174,24 @@ window.onload = time;
                                 radius: ['40%', '70%'],
                                 avoidLabelOverlap: false,
                                 label: {
-                                    show: false,
-                                    position: 'center'
+                                    show: true,
+                                    position: 'center',
+                                    formatter: '{b}: {d}%', // 显示格式，{b}是数据项名称，{d}是占比百分比
+                                    fontSize: 16,
+                                    fontWeight: 'normal'
                                 },
                                 emphasis: {
                                     label: {
                                         show: true,
-                                        fontSize: '30',
+                                        fontSize: '26',
                                         fontWeight: 'bold'
                                     }
                                 },
                                 labelLine: {
                                     show: false
                                 },
-                                data: [{value: memoryData, name: 'Memory Usage'}, {value: 100 - memoryData, name: ''}]
+                                data: [{value: memoryData, name: 'Memory Usage'}, {value: 100 - memoryData, name: 'Memory Free'}],
+                                color: ['#FFA500', '#90EE90']
                             }
                         ]
                     };
@@ -192,8 +202,11 @@ window.onload = time;
                                 radius: ['40%', '70%'],
                                 avoidLabelOverlap: false,
                                 label: {
-                                    show: false,
-                                    position: 'center'
+                                    show: true,
+                                    position: 'center',
+                                    formatter: '{b}: {d}%', // 显示格式，{b}是数据项名称，{d}是占比百分比
+                                    fontSize: 16,
+                                    fontWeight: 'normal'
                                 },
                                 emphasis: {
                                     label: {
@@ -205,7 +218,8 @@ window.onload = time;
                                 labelLine: {
                                     show: false
                                 },
-                                data: [{value: gpuData, name: 'GPU Usage'}, {value: 100 - gpuData, name: ''}]
+                                data: [{value: gpuData, name: 'GPU Usage'}, {value: 100 - gpuData, name: 'Memory Free'}],
+                                color: ['#FFA500', '#90EE90']
                             }
                         ]
                     };
