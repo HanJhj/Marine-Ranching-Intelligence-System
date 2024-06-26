@@ -2,7 +2,11 @@
 from django.shortcuts import render
 # import csv
 # from .forms import CSVUploadForm
-from .models import Fish, Water, Device
+from .models import Fish
+import sys
+sys.path.append('../')
+from BackManage.models import Device
+from MainInformation.models import Water
 # Create your views here.
 from django.db.models import Count
 from django.http import HttpResponse
