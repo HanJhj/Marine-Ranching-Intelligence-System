@@ -127,6 +127,7 @@
                         <thead><tr>
                             <th>ID</th>
                             <th>类型</th>
+                            <th>开关情况</th>
                             <th>状态</th>
                             <th>描述信息</th>
                         </tr>
@@ -138,6 +139,7 @@
                         <tr>
                             <td>{{ device.id }}</td>
                             <td>{{ device.type }}</td>
+                            <td>{{ device.on_off }}</td>
                             <td>{{ device.status }}</td>
                             <td style="word-wrap: break-word;">
                                 {{ device.description }}

@@ -20,6 +20,12 @@ def BackManage(request):
             device.status = '故障'
         else:
             device.status = '未知'
+
+        if device.on:
+            device.on_off = '开'
+        else:
+            device.on_off = '关'
+
     context = {'users': users, 'devices': devices}  # 数据字典
     return render(request, 'BackManage/chronic.html', context)
 

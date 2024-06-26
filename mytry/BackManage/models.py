@@ -6,6 +6,7 @@ class Device(models.Model):
     type = models.CharField(max_length=200)
     description = models.TextField(null=True)
     state = models.SmallIntegerField(default=0)
+    on = models.SmallIntegerField(default=0)
 
 
 
