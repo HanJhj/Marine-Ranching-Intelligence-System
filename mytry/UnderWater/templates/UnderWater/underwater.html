@@ -118,7 +118,72 @@
         <!--环境得分计算-->
         <div class="left div_any01" style="width:100%;">
             <div class="div_any_child" style="width:98%;position:relative;height: 400px;">
-                <div class="div_any_title">海洋牧场环境感知得分</div>
+                <div class="div_any_title">海洋牧场环境感知</div>
+                <!-- 插入雷达图 -->
+                <div id="radarChart" style="margin-top: 2.5%; width: 100%; height: 100%; margin-left: .5%; margin-right: .5%; margin-top: 5%; margin-bottom: .5%;"></div>
+                <script>
+                    // 页面加载完成后初始化图表
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // 初始化雷达图
+                        initRadarChart();
+                    });
+                    function initRadarChart() {
+                        // 基于准备好的dom,初始化echarts实例
+                        var radarChart = echarts.init(document.getElementById('radarChart'));
+                        
+                        // 指定图表的配置项和数据
+                        var option = {
+                            // title: {
+                            //     text: '海洋牧场环境感知得分'
+                            // },
+                            tooltip: {},
+                            legend: {
+                                data: ['海洋牧场环境感知'],
+                                textStyle: {
+                                        color: '#fff'
+                                }
+                            },
+                            radar: {
+                                // shape: 'circle',
+                                name: {
+                                    textStyle: {
+                                        color: '#fff',
+                                        backgroundColor: '#999',
+                                        borderRadius: 3, //文字边框圆角
+                                        padding: [2, 3] //文字边框内边距
+                                    }
+                                },
+                                indicator: [ // 雷达图的指示器，用来指定雷达图中的多个变量（维度）
+                                    { name: '温度', max: 20 },
+                                    { name: 'PH值', max: 14 },
+                                    { name: '溶解氧', max: 20 },
+                                    { name: '电导率', max: 300 },
+                                    { name: '浊度', max: 80 },
+                                    { name: '高猛酸盐', max: 25 },
+                                    { name: '氨氮', max: 0.3 },
+                                    { name: '总磷', max: 0.3 },
+                                    { name: '总氮', max: 25 }
+                                ]
+                            },
+                            series: [{
+                                name: '海洋牧场环境感知',
+                                type: 'radar',
+                                // areaStyle: {normal: {}},
+                                data: [
+                                    {
+                                        value: [{{water.temperature}}, {{water.ph}}, {{water.dissolved_oxygen}}, {{water.conductivity}}, {{water.turbidity}}, {{water.permanganate_index}}, {{water.ammonia_nitrogen}}, {{water.total_phosphorus}}, {{water.total_nitrogen}}],
+                                        name: '海洋牧场环境感知'
+                                   }
+                                ]
+                            }]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        radarChart.setOption(option);
+                        window.addEventListener('resize', function () {
+                            radarChart.resize();
+                        });
+                    }
+                </script>
             </div>
         </div>
         
@@ -178,9 +243,8 @@
       <!--总数量-->
         <div class="left div_any01" style="width:100%;">
             <div class="div_any_child" style="width:98%;position:relative;height: 525px;">
-
+                
             </div>
-
         </div>
     
       <!--鱼群属性曲线-->
