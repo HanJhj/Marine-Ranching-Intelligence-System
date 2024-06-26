@@ -1049,6 +1049,60 @@ border-radius: 3px;
 }
 
 
+
+
+/* 外层容器 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 29px;
+}
+
+/* 隐藏原生的checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 滑块样式 */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+/* 滑块打开时的样式 */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 21px;
+    width: 21px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* 开关打开时的样式 */
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+/* 打开时滑块的样式 */
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
 .hide{
   display: none !important;
 }
@@ -1071,7 +1125,6 @@ border-radius: 3px;
 
 .button-container {
   text-align: center;
-
 }
 
 .button-container button {
@@ -1088,49 +1141,6 @@ border-radius: 3px;
 .button-container button.active {
   background-color: #337ab7;
 }
-
-.button-container select {
-    display: inline-block !important; /* 使 select 元素在容器内水平居中 */
-    margin: 10px !important; /* 设置外边距 */
-    padding: 10px 20px !important; /* 设置内边距 */
-    font-size: 25px !important; /* 设置字体大小 */
-    background-color: transparent !important; /* 设置背景颜色为透明 */
-    color: white !important; /* 设置字体颜色 */
-    border: 1px solid #ccc !important; /* 设置边框 */
-    border-radius: 5px !important; /* 设置边框圆角 */
-    cursor: pointer !important; /* 设置鼠标指针样式 */
-  }
-
-  .botton-container select:focus {
-    background-color: #337ab7 !important; /* 设置焦点时的背景颜色 */
-    outline: none !important; /* 移除焦点时的默认轮廓 */
-  }
-
-
-.select-container {
-    text-align: center !important; /* 使容器内的内容水平居中 */
-   
-  }
-  
-  .select-container select {
-    display: inline-block !important; /* 使 select 元素在容器内水平居中 */
-    
-    padding: 10px 20px !important; /* 设置内边距 */
-    font-size: 25px !important; /* 设置字体大小 */
-    background-color: transparent !important; /* 设置背景颜色为透明 */
-    color: white !important; /* 设置字体颜色 */
-    border: 1px solid #ccc !important; /* 设置边框 */
-    border-radius: 5px !important; /* 设置边框圆角 */
-    cursor: pointer !important; /* 设置鼠标指针样式 */
-  }
-  
-  .select-container select:focus {
-    background-color: #337ab7 !important; /* 设置焦点时的背景颜色 */
-    outline: none !important; /* 移除焦点时的默认轮廓 */
-  }
-  
-  
-  
 
 .video-container {
   display: flex;
@@ -1160,4 +1170,31 @@ box-sizing: border-box;
   display: none !important; /* 隐藏iOS Safari浏览器下的视频控制条 */
 }
 
+
+.select-container {
+    text-align: center !important; /* 使容器内的内容水平居中 */
+   
+}
+
+.select-container select {
+    display: inline-block !important; /* 使 select 元素在容器内水平居中 */
+
+    padding: 10px 20px !important; /* 设置内边距 */
+    font-size: 25px !important; /* 设置字体大小 */
+    background-color: transparent !important; /* 设置背景颜色为透明 */
+    color: white !important; /* 设置字体颜色 */
+    border: 1px solid #ccc !important; /* 设置边框 */
+    border-radius: 5px !important; /* 设置边框圆角 */
+    cursor: pointer !important; /* 设置鼠标指针样式 */
+}
+
+.select-container select:focus {
+    background-color: #337ab7 !important; /* 设置焦点时的背景颜色 */
+    outline: none !important; /* 移除焦点时的默认轮廓 */
+}
+
+.gray-text {
+    color: lightgray;
+    font-size: 15px;
+}
 

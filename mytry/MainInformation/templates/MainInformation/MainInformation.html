@@ -159,6 +159,69 @@
                         <button class="blue-button" id='test3' onclick="changePage('test3')" >通道</button>
                         <button class="blue-button" id='test4' onclick="changePage('test4')" >告警</button>
                     </div>
+
+                    <div class="empty-row"></div>
+                    <div class="button-container" id='test1Div' style="height: 85%;margin-top: 0%;">
+                        
+                        <div class="table_p" style="height: 85%; margin-top: 0%;">
+                            <table style="height: 85%;margin-top: 0%; table-layout: fixed;">
+                                
+
+    
+                                <tbody>
+                                        
+
+                                    
+                                    <tr>
+                                        <td>监控设备</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td>状态均良好</td>
+                                        
+                                    </tr>
+                                    <tr><td> </td><td></td> </tr>
+                                    
+                                    <tr>
+                                        <td>水质检测设备</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td>状态均良好</td>
+                                    </tr>
+                                    <tr><td> </td><td></td> </tr>
+                                    
+                                    
+                            
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="button-container gray-text" id='test2Div' style="display: none;">
+                        <h1>当前时间</h1>
+                        <p>纽约时间: <span id="datetime-America/New_York"></span></p>
+                        <p>伦敦时间: <span id="datetime-Europe/London"></span></p>
+                        <p>上海时间: <span id="datetime-Asia/Shanghai"></span></p>
+                        <p>悉尼时间: <span id="datetime-Australia/Sydney"></span></p>
+
+                        
+                    </div>
+
+                    <div class="button-container" id='test3Div' style="display: none;">
+                        
+                    </div>
+
+                    <div class="button-container" id='test4Div' style="display: none;">
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,6 +231,31 @@
 
 
 <script>
+    function getD1(region) {
+            var date = new Date();
+            var options = {
+                timeZone: region,
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+            };
+            var formatter = new Intl.DateTimeFormat([], options);
+            var d1 = formatter.format(date);
+            document.getElementById("datetime-" + region).innerHTML = d1;
+        }
+
+        function updateTimes() {
+            getD1('America/New_York');
+            getD1('Europe/London');
+            getD1('Asia/Shanghai');
+            getD1('Australia/Sydney');
+        }
+
+        setInterval(updateTimes, 1000);
+
     // 更新时间显示
     function updateTime() {
         var dt = new Date();

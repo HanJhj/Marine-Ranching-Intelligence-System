@@ -9,7 +9,8 @@ window.addEventListener('DOMContentLoaded', function() {
       videos[i].style.display = 'none'; // 隐藏其他视频
     }
   }
-});
+
+});   
 
 function changeVideo(videoIndex) {
   var videos = document.getElementsByTagName('video');
@@ -30,13 +31,19 @@ function changeVideo(videoIndex) {
 }
 
 function changePage(PageIndex) {
+  var divs = document.getElementsByClassName('button-container');
   var buttons = document.getElementsByTagName('button');
   for (var i = 5; i < buttons.length; i++) {
       buttons[i].classList.remove('active');
   }
+  for (var i = 3; i < divs.length; i++) {
+      divs[i].style.display = 'none';
+  }
 
   var targetButton = document.getElementById(PageIndex);
   targetButton.classList.add('active');
+  var targetDiv = document.getElementById(PageIndex +'Div');
+  targetDiv.style.display = 'block';
 }
 
 
