@@ -167,17 +167,10 @@
                     </div>
 
                     <div class="empty-row"></div>
-                    <div class="button-container" id='test1Div' style="height: 85%;margin-top: 0%;">
-                        
+                    <div class="button-container" id='test1Div' style="height: 85%; margin-top: 0%;">
                         <div class="table_p" style="height: 85%; margin-top: 0%;">
-                            <table style="height: 85%;margin-top: 0%; table-layout: fixed;">
-                                
-
-    
+                            <table style="height: 85%; margin-top: 0%; table-layout: fixed;">
                                 <tbody>
-                                        
-
-                                    
                                     <tr>
                                         <td>监控设备</td>
                                         <td>
@@ -187,10 +180,8 @@
                                             </label>
                                         </td>
                                         <td>{{abn}}</td>
-                                        
                                     </tr>
-                                    <tr><td> </td><td></td> </tr>
-                                    
+                                    <tr><td></td><td></td></tr>
                                     <tr>
                                         <td>水质检测设备</td>
                                         <td>
@@ -201,11 +192,7 @@
                                         </td>
                                         <td>状态均良好</td>
                                     </tr>
-                                    <tr><td> </td><td></td> </tr>
-                                    
-                                    
-                            
-                                    
+                                    <tr><td></td><td></td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -219,10 +206,7 @@
                         <p>悉尼时间: <span id="datetime-Australia/Sydney"></span></p>
                         <div class="empty-row"></div>
                         <button class="green-button" onclick="updateTimes()">校准时间</button>
-                        
                     </div>
-
-                   
 
                     <div class="button-container" id='test4Div' style="display: none;">
                         <div class="decision warning">
@@ -234,6 +218,7 @@
                             {% endif %}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -246,10 +231,10 @@
     document.addEventListener('DOMContentLoaded', function() {
         var warning = '{{warning}}'; // 假设warning是从模板引擎传递过来的变量
         var button = document.getElementById('test4');
-        if (warning) {
-            button.style.color = 'red';
-        } else {
+        if (warning == '0') {
             button.style.color = 'white';
+        } else {
+            button.style.color = 'red';
         }
     });
 

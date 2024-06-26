@@ -7,82 +7,81 @@ from BackManage.models import Device
 
 # Create your views here.
 
+WARNING_OXYGEN=7.0
+WARNING_TEMPREATURE=18.0
+
+
+def calculate_warnings(water):
+    warning_oxygen = '是' if water.dissolved_oxygen < WARNING_OXYGEN else '否'
+    warning_temperature = '是' if water.temperature > WARNING_TEMPREATURE else '否'
+    warning = 1 if warning_oxygen == '是' or warning_temperature == '是' else 0
+    return warning_oxygen, warning_temperature, warning
 
 
 
-
-def MainInformation(request):
-    WARNING_OXYGEN=7.0
-    WARNING_TEMPREATURE=18.0
-    warning = 0
+def get_water_data():
+    today = pd.Timestamp.now().strftime('%Y-%m-%d')
     try:
-        # 获取今天的数据
-        today = pd.Timestamp.now().strftime('%Y-%m-%d')
         water = Water.objects.get(time__startswith=today)
-        warning_oxygen= '是' if water.dissolved_oxygen < WARNING_OXYGEN else '否' #当溶解氧低于某个阈值
-        warning_temperature= '是' if water.temperature > WARNING_TEMPREATURE else '否' #当温度高于某个阈值
-        warning = 1 if warning_oxygen == '是' or warning_temperature == '是' else 0
-        
-
     except Water.DoesNotExist:
-        water = Water.objects.get(time__startswith='2024-06-22')
-        warning_oxygen= '是' if water.dissolved_oxygen < WARNING_OXYGEN else '否' #当溶解氧低于某个阈值
-        warning_temperature= '是' if water.temperature > WARNING_TEMPREATURE else '否' #当温度高于某个阈值
-        warning = 1 if warning_oxygen == '是' or warning_temperature == '是' else 0
-        
-    
+        try:
+            water = Water.objects.get(time__startswith='2024-06-22')
+        except Water.DoesNotExist:
+            water = None
+    return water
+
+def get_device_status():
+    try:
+        device = Device.objects.filter(type__contains='摄像头', on=0)
+        on = 0 if device else 1
+    except:
+        on = 0
+
+    try:
+        device = Device.objects.filter(type__contains='摄像头', state__in=[1, 2])
+        abn = '存在异常设备' if device else '状态均良好'
+    except:
+        abn = '状态均良好'
+
+    return on, abn
+
+def prepare_context(water):
+    if water:
+        warning_oxygen, warning_temperature, warning = calculate_warnings(water)
+    else:
+        warning_oxygen, warning_temperature, warning = '否', '否', 0
+
     all_water = Water.objects.all().order_by('-time')
     water_num = all_water.count()
     if not all_water:
         all_water = None
     if not water:
         water = None
-        warning_oxygen= '无'
-        warning_temperature= '无'
+        warning_oxygen = '无'
+        warning_temperature = '无'
 
-    try:
-        device = Device.objects.filter(type__contains='摄像头', on=0)
-        if device:
-            on = 0
-        else:
-            on = 1
-    except:
-        on = 0
+    on, abn = get_device_status()
 
-    try:
-        device = Device.objects.filter(type__contains='摄像头', state=(1 or 2))
-        if device:
-            abn='存在异常设备'
-        else:
-            abn='状态均良好'
-    except:
-        abn='状态均良好'
-    
-    context = {'today_water': water,
-               'all_water': all_water,
-               'water_num': water_num,
-               'warning_oxygen': warning_oxygen,
-               'warning_temperature': warning_temperature,
-               'on': on,
-               'abn': abn,
-               'warning':warning}
+    context = {
+        'today_water': water,
+        'all_water': all_water,
+        'water_num': water_num,
+        'warning_oxygen': warning_oxygen,
+        'warning_temperature': warning_temperature,
+        'on': on,
+        'abn': abn,
+        'warning': warning
+    }
+    return context
+
+def MainInformation(request):
+    water = get_water_data()
+    context = prepare_context(water)
     return render(request, 'MainInformation/MainInformation.html', context)
 
 def MainInformation_user(request):
-    try:
-        # 获取今天的数据
-        today = pd.Timestamp.now().strftime('%Y-%m-%d')
-        water = Water.objects.get(time__startswith=today)
-    except Water.DoesNotExist:
-        water = Water.objects.get(time__startswith='2024-06-22')
-    
-    all_water = Water.objects.all().order_by('-time')
-    water_num = all_water.count()
-    if not all_water:
-        all_water = None
-    context = {'today_water': water,
-               'all_water': all_water,
-               'water_num': water_num}
+    water = get_water_data()
+    context = prepare_context(water)
     return render(request, 'MainInformation/MainInformation_user.html', context)
 
 
@@ -103,7 +102,8 @@ def clear_water_data():
     Water.objects.all().delete()
     print("水质数据表已清空。")
 
-def Upload(request):
+
+def Upload(request, isUser=False):
     if request.method == 'POST'and len(request.FILES) > 0:
         f = request.FILES['file']
         excel_type = f.name.split('.')[1]
@@ -132,11 +132,13 @@ def Upload(request):
             error = '上传文件类型错误！'
             print(error)
         print('上传成功！')
-            
-    return render(request, 'MainInformation/MainInformation.html')
+    if isUser:
+        return render(request, 'MainInformation/MainInformation_user.html')
+    else:
+        return render(request, 'MainInformation/MainInformation.html')
 
 
-def on_off(request):
+def on_off(request, isUser=False):
     if request.method == 'POST':
         on = request.POST.get('on-off')
         if on == '1':
@@ -147,5 +149,8 @@ def on_off(request):
             device = Device.objects.filter(type__contains='摄像头', on=0)
             if device:
                 device.update(on=1)
-    return render(request, 'MainInformation/MainInformation.html')
+    if isUser:
+        return render(request, 'MainInformation/MainInformation_user.html')
+    else:
+        return render(request, 'MainInformation/MainInformation.html')
 
