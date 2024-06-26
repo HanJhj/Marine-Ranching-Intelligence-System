@@ -374,6 +374,7 @@ a:hover{
     margin-right: 2%;
 
 }
+
 .div_any_child01_wh{
     width: 98% !important;
 }
@@ -1047,3 +1048,4 @@ border-radius: 3px;
 .popBox .ttBox{height: 30px; line-height: 30px; padding: 14px 30px; border-bottom: solid 1px #eef0f1;text-align: center;-webkit-box-sizing: content-box;  -moz-box-sizing: content-box;box-sizing: content-box;}
 .popBox .ttBox .tt{font-size: 20px; display: inline-block;  height: 30px;}
 .popBox .txtBox{height: calc(100% - 80px);overflow: auto;padding: 10px 0;}
+
