@@ -1064,7 +1064,7 @@ border-radius: 3px;
     margin-right:5%;
 }
 .data-statistics-table {
-    min-width: 420px; /* 根据实际需要设置最小宽度 */
+    min-width: 300px; /* 根据实际需要设置最小宽度 */
 }
 
 /* 定义5种不同的背景色 */
@@ -1082,11 +1082,11 @@ border-radius: 3px;
     text-align: left; /* 这会让文本靠左对齐 */
 }
 
-#sensor-table th:first-child, #sensor-table td:first-child {
+/* #sensor-table th:first-child, #sensor-table td:first-child {
     width: 10%;
 }
 
 
 #sensor-table th:last-child, #sensor-table td:last-child {
     width: 90%;
-}
+} */
