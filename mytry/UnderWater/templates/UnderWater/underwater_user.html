@@ -477,7 +477,8 @@
                         <li>----------</li>                            
                         {% for device in device_list %}
                             <li>名称：{{ device.type }}</li>
-                            <li>状态：（0表示关，1表示开）{{ device.state }}</li>
+                            <li>开关情况：（0表示关，1表示开）{{ device.on }}</li>
+                            <li>状态：（0表示正常，1表示故障，2表示未知）{{ device.state }}</li>
                             <li>描述信息：{{ device.description }}</li>
                             <li>----------</li>                            
                         {% endfor %}
