@@ -1,25 +1,71 @@
 from django.shortcuts import render
 import pandas as pd
 from .models import Water
+import sys
+sys.path.append('../')
+from BackManage.models import Device
 
 # Create your views here.
 
 
+
+
+
 def MainInformation(request):
+    WARNING_OXYGEN=7.0
+    WARNING_TEMPREATURE=18.0
+    warning = 0
     try:
         # 获取今天的数据
         today = pd.Timestamp.now().strftime('%Y-%m-%d')
         water = Water.objects.get(time__startswith=today)
+        warning_oxygen= '是' if water.dissolved_oxygen < WARNING_OXYGEN else '否' #当溶解氧低于某个阈值
+        warning_temperature= '是' if water.temperature > WARNING_TEMPREATURE else '否' #当温度高于某个阈值
+        warning = 1 if warning_oxygen == '是' or warning_temperature == '是' else 0
+        
+
     except Water.DoesNotExist:
         water = Water.objects.get(time__startswith='2024-06-22')
+        warning_oxygen= '是' if water.dissolved_oxygen < WARNING_OXYGEN else '否' #当溶解氧低于某个阈值
+        warning_temperature= '是' if water.temperature > WARNING_TEMPREATURE else '否' #当温度高于某个阈值
+        warning = 1 if warning_oxygen == '是' or warning_temperature == '是' else 0
+        
     
     all_water = Water.objects.all().order_by('-time')
     water_num = all_water.count()
     if not all_water:
         all_water = None
+    if not water:
+        water = None
+        warning_oxygen= '无'
+        warning_temperature= '无'
+
+    try:
+        device = Device.objects.filter(type__contains='摄像头', on=0)
+        if device:
+            on = 0
+        else:
+            on = 1
+    except:
+        on = 0
+
+    try:
+        device = Device.objects.filter(type__contains='摄像头', state=(1 or 2))
+        if device:
+            abn='存在异常设备'
+        else:
+            abn='状态均良好'
+    except:
+        abn='状态均良好'
+    
     context = {'today_water': water,
                'all_water': all_water,
-               'water_num': water_num}
+               'water_num': water_num,
+               'warning_oxygen': warning_oxygen,
+               'warning_temperature': warning_temperature,
+               'on': on,
+               'abn': abn,
+               'warning':warning}
     return render(request, 'MainInformation/MainInformation.html', context)
 
 def MainInformation_user(request):
@@ -39,6 +85,8 @@ def MainInformation_user(request):
                'water_num': water_num}
     return render(request, 'MainInformation/MainInformation_user.html', context)
 
+
+
 def insert_water_data(time, water_type, temperature, ph, dissolved_oxygen, conductivity, 
                       turbidity, permanganate_index, ammonia_nitrogen, total_phosphorus, total_nitrogen):
     Water.objects.create(time=time, type=water_type, temperature=temperature, 
@@ -48,10 +96,13 @@ def insert_water_data(time, water_type, temperature, ph, dissolved_oxygen, condu
                          total_nitrogen=total_nitrogen)
     
 
+
+
 def clear_water_data():
     # 删除Water表中的所有记录
     Water.objects.all().delete()
     print("水质数据表已清空。")
+
 def Upload(request):
     if request.method == 'POST'and len(request.FILES) > 0:
         f = request.FILES['file']
@@ -82,5 +133,19 @@ def Upload(request):
             print(error)
         print('上传成功！')
             
+    return render(request, 'MainInformation/MainInformation.html')
+
+
+def on_off(request):
+    if request.method == 'POST':
+        on = request.POST.get('on-off')
+        if on == '1':
+            device = Device.objects.filter(type__contains='摄像头', on=1)
+            if device:
+                device.update(on=0)
+        else:
+            device = Device.objects.filter(type__contains='摄像头', on=0)
+            if device:
+                device.update(on=1)
     return render(request, 'MainInformation/MainInformation.html')
 

@@ -10,24 +10,36 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-});   
+}); 
 
-function changeVideo(videoIndex) {
-  var videos = document.getElementsByTagName('video');
+function changeB(videoIndex) {
   var buttons = document.getElementsByTagName('button');
 
-  for (var i = 0; i < videos.length; i++) {
-    videos[i].pause();
-    videos[i].currentTime = 0;
-    videos[i].style.display = 'none';
+  for (var i = 0; i < 4; i++) {
     buttons[i].classList.remove('active');
   }
-
-  var targetVideo = videos[videoIndex];
   var targetButton = buttons[videoIndex];
-  targetVideo.style.display = 'block';
-  targetVideo.play();
   targetButton.classList.add('active');
+}
+
+function changeV(videoIndex) {
+  var videos = document.getElementsByTagName('video');
+  if (videos.length > 0) {
+    for (var i = 0; i < videos.length; i++) {
+      videos[i].pause();
+      videos[i].currentTime = 0;
+      videos[i].style.display = 'none';
+    }
+  
+    var targetVideo = videos[videoIndex];
+    targetVideo.style.display = 'block';
+    targetVideo.play();
+  }
+}
+
+function changeVideo(videoIndex) {
+  changeB(videoIndex);
+  changeV(videoIndex);
 }
 
 function changePage(PageIndex) {

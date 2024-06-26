@@ -47,11 +47,17 @@
                         <button id="video4" onclick="changeVideo('video4')" class="blue-button">监控4</button>
                     </div>
                     <div class="video-container">
+                        {% if on %}
                         <video id="video1" src="{% static 'MainInformation/videos/video1.mp4' %}" loop muted></video>
                         <video id="video2" src="{% static 'MainInformation/videos/video2.mp4' %}" loop muted></video>
                         <video id="video3" src="{% static 'MainInformation/videos/video3.mp4' %}" loop muted></video>
                         <video id="video4" src="{% static 'MainInformation/videos/video4.mp4' %}" loop muted></video>
+                        {% else %}
+                        <img src="{% static 'MainInformation/images/closed.jpg' %}" alt="视频已关闭" style="width: 85%; height: 90%;">
+                        {% endif %}
                     </div>
+                   
+                    
                     <div class="table-container">
                         <div class="table_p" style="height: 85%; margin-top: 0%;">
                             <table>
@@ -156,8 +162,8 @@
                     <div class="button-container">
                         <button class="blue-button active" id='test1' onclick="changePage('test1')" >主控</button>
                         <button class="blue-button" id='test2' onclick="changePage('test2')" >时间校准</button>
-                        <button class="blue-button" id='test3' onclick="changePage('test3')" >通道</button>
                         <button class="blue-button" id='test4' onclick="changePage('test4')" >告警</button>
+
                     </div>
 
                     <div class="empty-row"></div>
@@ -176,11 +182,11 @@
                                         <td>监控设备</td>
                                         <td>
                                             <label class="switch">
-                                                <input type="checkbox">
+                                                <input type="checkbox" onclick="Change('{{on}}')" {% if on %}checked{% endif %}>
                                                 <span class="slider"></span>
                                             </label>
                                         </td>
-                                        <td>状态均良好</td>
+                                        <td>{{abn}}</td>
                                         
                                     </tr>
                                     <tr><td> </td><td></td> </tr>
@@ -189,7 +195,7 @@
                                         <td>水质检测设备</td>
                                         <td>
                                             <label class="switch">
-                                                <input type="checkbox">
+                                                <input type="checkbox" checked>
                                                 <span class="slider"></span>
                                             </label>
                                         </td>
@@ -211,16 +217,22 @@
                         <p>伦敦时间: <span id="datetime-Europe/London"></span></p>
                         <p>上海时间: <span id="datetime-Asia/Shanghai"></span></p>
                         <p>悉尼时间: <span id="datetime-Australia/Sydney"></span></p>
-
+                        <div class="empty-row"></div>
+                        <button class="green-button" onclick="updateTimes()">校准时间</button>
                         
                     </div>
 
-                    <div class="button-container" id='test3Div' style="display: none;">
-                        
-                    </div>
+                   
 
                     <div class="button-container" id='test4Div' style="display: none;">
-                        
+                        <div class="decision warning">
+                            {% if warning_oxygen == '是' %}
+                                <p class="warning">警告：溶解氧水平低，需关注鱼类健康！建议开启增氧设备、进行部分换水操作、调整养殖密度。</p>
+                            {% endif %}
+                            {% if warning_temperature == '是' %}
+                                <p class="warning">警告：水温过高，可能影响水质与生物状态！建议加强监测与记录、优化饲料管理。</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -231,6 +243,16 @@
 
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var warning = '{{warning}}'; // 假设warning是从模板引擎传递过来的变量
+        var button = document.getElementById('test4');
+        if (warning) {
+            button.style.color = 'red';
+        } else {
+            button.style.color = 'white';
+        }
+    });
+
     function getD1(region) {
             var date = new Date();
             var options = {
@@ -408,6 +430,29 @@
             alert("请选择上传文件！");
         }
     }
+
+    function Change(state){
+            var videos = document.getElementsByTagName('video');
+            buttons = document.getElementsByTagName('button');
+            var formData = new FormData();
+            formData.append('on-off', state);
+            fetch('./on-off', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'), // 获取CSRF token
+                },
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // 在这里添加页面刷新的代码
+                location.reload(); 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        }
 
     // 获取CSRF token
     function getCookie(name) {

@@ -1198,3 +1198,60 @@ box-sizing: border-box;
     font-size: 15px;
 }
 
+.decision {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* 确保文本内容也水平居中 */
+    margin-top:5%;
+    margin-left:5%;
+    margin-right:5%;
+}
+/* 示例美化文本样式 */
+.decision p {
+    font-family: Arial, sans-serif; /* 更换字体 */
+    font-size: 18px; /* 调整字体大小 */
+    line-height: 1.5; /* 调整行高，增加阅读舒适度 */
+    color: #6e6969; /* 更改文本颜色，这里使用深灰色 */
+    margin: 10px 0; /* 上下外边距，使内容之间有一定的间距 */
+    margin-top:5%;
+    margin-left:5%;
+    margin-right:5%;
+
+}
+
+/* 特别警告样式，如.warning类 */
+.decision.warning p {
+    color: #FF6347; /* 使用警告色，如 tomato */
+    font-weight: bold; /* 加粗警告文本 */
+    margin-top:5%;
+    margin-left:5%;
+    margin-right:5%;
+}
+
+.button-container.gray-text .green-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-container.gray-text .green-button:hover {
+    background-color: darkgreen; /* 鼠标悬停时的背景颜色 */
+}
+
+.button-container.gray-text .green-button:active {
+    background-color: green; /* 点击时的背景颜色 */
+    transform: translateY(1px); /* 点击时稍微向下移动 */
+}
+
+
+
