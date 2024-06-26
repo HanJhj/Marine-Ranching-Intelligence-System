@@ -1049,3 +1049,27 @@ border-radius: 3px;
 .popBox .ttBox .tt{font-size: 20px; display: inline-block;  height: 30px;}
 .popBox .txtBox{height: calc(100% - 80px);overflow: auto;padding: 10px 0;}
 
+.data-statistics-table td {
+    white-space: nowrap; /* 阻止文本换行 */
+    overflow: hidden; /* 隐藏超出部分 */
+    text-overflow: ellipsis; /* 添加省略号 */
+    max-width: 95%; /* 设置最大宽度，根据实际情况调整 */
+}
+.table-responsive {
+    overflow-y: auto;
+    max-height: 90%; /* 您可以自定义这个高度，根据需要设置 */
+    margin-top: 5%;
+}
+.data-statistics-table {
+    min-width: 420px; /* 根据实际需要设置最小宽度 */
+}
+
+/* 定义5种不同的背景色 */
+.alternate-row-1 { background-color: #4d4f98; color: #d0f783;border: none; opacity: 0.5} /* 浅灰色背景，深灰文字 */
+.alternate-row-2 { background-color: #301d77; color: #d0f783;border: none;opacity: 0.5} /* 白色背景，深灰文字 */
+
+.data-statistics-table th {
+    font-size: 8px; /* 指定字体大小 */
+    color: #eff7f5; /* 指定字体颜色 */
+}
+
