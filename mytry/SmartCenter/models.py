@@ -12,3 +12,12 @@ class EnvironmentData(models.Model):
     class Meta:
         ordering = ['monitoring_date']
 
+class Fish_detect(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    species = models.CharField(max_length=50)
+    length = models.FloatField()
+    weight = models.IntegerField()
+
+    def __str__(self):
+        return self.species
+
