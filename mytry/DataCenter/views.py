@@ -1,8 +1,16 @@
-from django.shortcuts import render
 
+from django.shortcuts import render
+from .models import HardwareInfo
+from datetime import date
 # Create your views here.
 
 def DataCenter(request):
-    context = {'title': 'My Page Title'}  # 数据字典
-    # return render(request, '/templates/trend.html', context)  # 使用模板
+
+    latest_info = HardwareInfo.objects.filter(date=date.today()).first()
+    
+    context = {
+        'latest_info': latest_info,
+    }
     return render(request, 'DataCenter/NCDindex.html', context)
+
+
