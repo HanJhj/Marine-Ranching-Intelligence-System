@@ -2,11 +2,12 @@
 from django.shortcuts import render
 # import csv
 # from .forms import CSVUploadForm
-from .models import Fish
+from .models import Fish, Water
 # Create your views here.
 from django.db.models import Count
 from django.http import HttpResponse
 import csv
+import pandas as pd
 def UnderWater(request):
     all_fish = Fish.objects.all()
     # 鱼群总量
@@ -24,6 +25,13 @@ def UnderWater(request):
     pike_weights = Fish.objects.filter(Species='Pike').values_list('Weight', flat=True)
     smelt_weights = Fish.objects.filter(Species='Smelt').values_list('Weight', flat=True)
 
+    # water
+    try:
+        # 获取今天的数据
+        today = pd.Timestamp.now().strftime('%Y-%m-%d')
+        water = Water.objects.get(time__startswith=today)
+    except Water.DoesNotExist:
+        water = Water.objects.get(time__startswith='2024-06-22')
     context = {'all_fish': all_fish,
                'fishnum':fishnum,
                'fish_counts':fish_counts,
@@ -35,7 +43,7 @@ def UnderWater(request):
                 'Perch_weights': list(perch_weights),
                 'Pike_weights': list(pike_weights),
                 'Smelt_weights': list(smelt_weights),
-
+                'water':water
                }
     return render(request, 'UnderWater/UnderWater.html', context)
 
