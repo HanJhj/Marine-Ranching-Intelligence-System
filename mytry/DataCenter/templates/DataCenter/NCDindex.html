@@ -303,7 +303,7 @@ window.onload = time;
                                     {% cycle 'alternate-row-1' 'alternate-row-2' as row_classes silent %}
                                     {% for device_type_count in device_counts %}
                                         <tr class="{{ row_classes }}">
-                                            <td>{{ device_type_count.device_type }}</td>
+                                            <td>{{ device_type_count.type }}</td>
                                             <td>{{ device_type_count.device_count }}</td>
                                             <!-- <td>{{ info.verbose_name }}</td> -->
                                         </tr>

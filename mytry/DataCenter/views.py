@@ -1,7 +1,9 @@
 
 from django.shortcuts import render
 from .models import HardwareInfo
-from .models import Device
+import sys
+sys.path.append('../')
+from BackManage.models import Device
 
 from datetime import date
 from django.apps import apps
@@ -29,7 +31,7 @@ def DataCenter(request):
     table_info_list.sort(key=lambda x: x['app_label'])# 按照 app_label 排序，可选
     # 设备信息
     # device_counts = Device.objects.values('device_type').annotate(count=models.Count('device_type'))
-    device_counts = Device.objects.values('device_type').annotate(device_count=Count('id'))
+    device_counts = Device.objects.values('type').annotate(device_count=Count('id'))
 # 
     context = {
         'latest_info': latest_info,
