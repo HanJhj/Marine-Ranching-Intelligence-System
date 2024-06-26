@@ -509,7 +509,6 @@
             <div class="left div_any01" style="width:48%;">
                 <div class="div_any_child" style="height: 420px;">
                     <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_18.png' %}" alt="Example Image">识别出鱼的信息</div>
-
                     <style>
                         .text-center {
                         display: flex;
@@ -551,17 +550,13 @@
                             transform: scale(0.98); /* 按下时稍微变小，模拟按钮按压效果 */
                         }
 
-                    </style>
-                                        
+                    </style>     
                     <div class="text-center" style="height: 100vh;">
                     <div class="left div_any01" id="fishInfoContainer" style="width:48%;">
-
                         <p><strong>编号:</strong> {{ fish.code }}</p>
                         <p><strong>鱼种:</strong> {{ fish.species }}</p>
                         <p><strong>体长:</strong> {{ fish.length }} cm</p>
                         <p><strong>体重:</strong> {{ fish.weight }} g</p>
-
-
                     </div>
                     </div>
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -589,17 +584,69 @@
                     });
                     </script>
                 </div>
-
-
             </div>
 
 
             <div class="right div_any01" style="width:48%;">
                 <div class="div_any_child" style="height: 420px;">
                     <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_19.png' %}" alt="Example Image">AI决策</div>
-                    <p id="pieChart2" class="p_chart" style="height: 400px;"></p>
+                    <!-- <p id="pieChart2" class="p_chart" style="height: 400px;"></p> -->
+                    <style>
+                        .decision {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center; /* 确保文本内容也水平居中 */
+                            margin-top:20%;
+                        }
+                        /* 示例美化文本样式 */
+                        .decision p {
+                            font-family: Arial, sans-serif; /* 更换字体 */
+                            font-size: 18px; /* 调整字体大小 */
+                            line-height: 1.5; /* 调整行高，增加阅读舒适度 */
+                            color: #6e6969; /* 更改文本颜色，这里使用深灰色 */
+                            margin: 10px 0; /* 上下外边距，使内容之间有一定的间距 */
+                            margin-top:20%;
+
+                        }
+
+                        /* 特别警告样式，如.warning类 */
+                        .decision.warning p {
+                            color: #FF6347; /* 使用警告色，如 tomato */
+                            font-weight: bold; /* 加粗警告文本 */
+                            margin-top:20%;
+
+                        }
+                    </style>
+
+                    {% if not error_message %}
+                        <!-- AI决策逻辑 -->
+                        {% if warning_oxygen == '否' and warning_temperature == '否' and description == '晴' %}
+                            <div class="decision">
+                                <p>当前天气为晴天，且环境指标正常，无需做出特别调整，适宜出海作业。</p>
+                            </div>
+                        {% else %}
+                            <div class="decision warning">
+                                {% if warning_oxygen == '是' %}
+                                    <p class="warning">警告：溶解氧水平低，需关注鱼类健康！</p>
+                                {% endif %}
+                                {% if warning_temperature == '是' %}
+                                    <p class="warning">警告：水温过高，可能影响水质与生物状态！建议加强监测与记录、优化饲料管理。</p>
+                                {% endif %}
+                                {% if description != '晴' %}
+                                    <p class="warning">当前非晴朗天气，请根据具体天气情况调整计划。</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p>{{ error_message }}</p>
+                    {% endif %}
+
                 </div>
             </div>
+
+
         </div>
     </div>
 </body>
