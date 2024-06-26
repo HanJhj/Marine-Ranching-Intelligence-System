@@ -2,7 +2,7 @@
 from django.shortcuts import render
 # import csv
 # from .forms import CSVUploadForm
-from .models import Fish, Water
+from .models import Fish, Water, Device
 # Create your views here.
 from django.db.models import Count
 from django.http import HttpResponse
@@ -34,6 +34,17 @@ def UnderWater(request):
         water = Water.objects.get(time__startswith='2024-06-22')
     # 鱼的种类数
     species_counts = Fish.objects.values('Species').distinct().count()
+    # 获取设备类型、开关状态和描述信息
+    device_list = Device.objects.all()
+    # device = Device.objects.first()
+    # if device:
+    #     device_type = device.type
+    #     device_state = device.state
+    #     device_description = device.description
+    # else:
+    #     device_type = 'Unknown'
+    #     device_state = 'Unknown'
+    #     device_description = 'Unknown'
 
     context = {'all_fish': all_fish,
                'fishnum':fishnum,
@@ -47,7 +58,11 @@ def UnderWater(request):
                 'Pike_weights': list(pike_weights),
                 'Smelt_weights': list(smelt_weights),
                 'water': water,
-                'species_counts': species_counts
+                'species_counts': species_counts,
+                # 'device_type': device_type,
+                # 'device_state': device_state,
+                # 'device_description': device_description,
+                'device_list': device_list
                }
     return render(request, 'UnderWater/UnderWater.html', context)
 
@@ -79,7 +94,9 @@ def UnderWater_user(request):
         water = Water.objects.get(time__startswith='2024-06-22')
     # 鱼的种类数
     species_counts = Fish.objects.values('Species').distinct().count()
-    
+    # 获取设备类型、开关状态和描述信息
+    device_list = Device.objects.all()
+
     context = {'all_fish': all_fish,
                'fishnum':fishnum,
                'fish_counts':fish_counts,
@@ -92,7 +109,8 @@ def UnderWater_user(request):
                 'Pike_weights': list(pike_weights),
                 'Smelt_weights': list(smelt_weights),
                 'water': water,
-                'species_counts': species_counts
+                'species_counts': species_counts,
+                'device_list': device_list
                }
     return render(request, 'UnderWater/UnderWater_user.html', context)
 

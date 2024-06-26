@@ -23,3 +23,13 @@ class Water(models.Model):
     ammonia_nitrogen = models.FloatField(verbose_name="氨氮", help_text="单位: mg/L")
     total_phosphorus = models.FloatField(verbose_name="总磷", help_text="单位: mg/L")
     total_nitrogen = models.FloatField(verbose_name="总氮", help_text="单位: mg/L")
+
+
+class Device(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.CharField(max_length=200)
+    state = models.SmallIntegerField(default=0)
+    description = models.TextField(null=True)
+
+    def __str__(self):
+        return f"Device #{self.id}: {self.type}"

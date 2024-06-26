@@ -467,6 +467,33 @@
         <div class="left div_any01" style="width:100%;">
             <div class="div_any_child" style="width:98%;position:relative;height: 525px;">
                 <div class="div_any_title">设备信息</div>
+                <!-- 展示设备信息：名称、状态、描述信息 -->
+                <div class="device-list-container" style="margin: 6%;
+                max-height: 90%; /* 或者根据需要设置其他值 */
+                overflow-y: auto; /* 当内容超出指定高度时，显示垂直滚动条 */
+                padding: 15px; /* 可选，为了美观添加一些内边距 */
+                border: 1px solid #ccc; /* 可选，添加边框以更清晰地定义容器 */
+                color: #ffffff; /* 白色 */">
+                <style>
+                    li {
+                        border-bottom: 1px solid #ccc; /* 设置底部边框作为分割线 */
+                        padding: 8px 0; /* 添加一些垂直内边距以增加可读性 */
+                    }
+            
+                    li:last-child {
+                        border-bottom: none; /* 移除最后一个列表项的底部边框 */
+                    }
+                </style>
+                    <ul>
+                        <li></li>                            
+                        {% for device in device_list %}
+                            <li>名称：{{ device.type }}</li>
+                            <li>状态：（0表示关，1表示开）{{ device.state }}</li>
+                            <li>描述信息：{{ device.description }}</li>
+                            <li></li>                            
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
 
