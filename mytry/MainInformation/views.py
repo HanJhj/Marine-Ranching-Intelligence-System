@@ -10,9 +10,8 @@ def MainInformation(request):
         # 获取今天的数据
         today = pd.Timestamp.now().strftime('%Y-%m-%d')
         water = Water.objects.get(time__startswith=today)
-        # water = Water.objects.get(time__startswith='2024-06-22')
     except Water.DoesNotExist:
-        water = None
+        water = Water.objects.get(time__startswith='2024-06-22')
     
     all_water = Water.objects.all().order_by('-time')
     water_num = all_water.count()
@@ -28,9 +27,8 @@ def MainInformation_user(request):
         # 获取今天的数据
         today = pd.Timestamp.now().strftime('%Y-%m-%d')
         water = Water.objects.get(time__startswith=today)
-        # water = Water.objects.get(time__startswith='2024-06-22')
     except Water.DoesNotExist:
-        water = None
+        water = Water.objects.get(time__startswith='2024-06-22')
     
     all_water = Water.objects.all().order_by('-time')
     water_num = all_water.count()
