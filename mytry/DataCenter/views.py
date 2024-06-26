@@ -1,8 +1,11 @@
 
 from django.shortcuts import render
 from .models import HardwareInfo
+from .models import Device
+
 from datetime import date
 from django.apps import apps
+from django.db.models import Count
 # Create your views here.
 
 def DataCenter(request):
@@ -23,12 +26,15 @@ def DataCenter(request):
                 'table_name': table_name,
                 'verbose_name': verbose_name,
             })
-    
-    # 按照 app_label 排序，可选
-    table_info_list.sort(key=lambda x: x['app_label'])
+    table_info_list.sort(key=lambda x: x['app_label'])# 按照 app_label 排序，可选
+    # 设备信息
+    # device_counts = Device.objects.values('device_type').annotate(count=models.Count('device_type'))
+    device_counts = Device.objects.values('device_type').annotate(device_count=Count('id'))
+# 
     context = {
         'latest_info': latest_info,
         'table_info_list': table_info_list,
+        'device_counts': device_counts
     }
     return render(request, 'DataCenter/NCDindex.html', context)
 
