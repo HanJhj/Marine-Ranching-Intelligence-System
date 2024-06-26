@@ -282,58 +282,53 @@
                     </div>
                 </div>
             </div>
+            <div class="left div_table_box" style="width: 100%;display: flex;">
+                <div class="div_any_child" style="height: 420px;">
+                    <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_16.png' %}" alt="Example Image">气象数据</div>
+                    <head> 
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                            }
+                    
+                            .container {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                padding: 20px;
+                            }
+                    
+                            .text-container {
+                                max-width: 60%;
+                                /* 居中展示 */
+                                margin: 0 auto; /* 水平居中 */
+                                text-align: center; /* 文本内容也居中对齐 */
 
-
-
-
-
-
-              <div class="left div_table_box" style="width: 100%;display: flex;">
-                  <div class="div_any_child" style="height: 420px;">
-                      <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_16.png' %}" alt="Example Image">气象数据</div>
-                      <head> <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                        }
-                
-                        .container {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            padding: 20px;
-                        }
-                
-                        .text-container {
-                            max-width: 60%;
-                            /* 居中展示 */
-                            margin: 0 auto; /* 水平居中 */
-                            text-align: center; /* 文本内容也居中对齐 */
-
-                        }
-                
-                        .image-container {
-                            min-width: 30%;
-                            display: flex; /* 使用Flex布局 */
-                            justify-content: center; /* 水平居中 */
-                            align-items: center; /* 垂直居中，假设容器有一个确定的高度 */
-                        }
-                
-                        .title {
-                            font-size: 24px;
-                            margin-bottom: 10px;
-                        }
-                
-                        .description {
-                            font-size: 16px;
-                            margin-bottom: 20px;
-                        }
-                
-                        img {
-                            max-width: 100%;
-                        }
-                    </style></head>
-                     
-                     <body>
+                            }
+                    
+                            .image-container {
+                                min-width: 30%;
+                                display: flex; /* 使用Flex布局 */
+                                justify-content: center; /* 水平居中 */
+                                align-items: center; /* 垂直居中，假设容器有一个确定的高度 */
+                            }
+                    
+                            .title {
+                                font-size: 24px;
+                                margin-bottom: 10px;
+                            }
+                    
+                            .description {
+                                font-size: 16px;
+                                margin-bottom: 20px;
+                            }
+                    
+                            img {
+                                max-width: 100%;
+                            }
+                        </style>
+                    </head>
+                    <body>
                         <div class="container">
                             <div class="text-container">
                                 <style>
@@ -366,82 +361,165 @@
                             </div>
                             <div class="image-container">
                                 <canvas id="weatherChart" width="400" height="400"></canvas>
-                              <script>
-                                // 确保页面加载完成后再执行此脚本
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    // 从Django模板上下文中获取数据
-                                    var temperature = {{ temperature|safe }};
-                                    var humidity = {{ humidity|safe }};
-                                    var windSpeed = {{ wind_speed|safe }};
-                            
-                                    // 初始化图表
-                                    var ctx = document.getElementById('weatherChart').getContext('2d');
-                                    var weatherChart = new Chart(ctx, {
-                                        type: 'bar', // 或者'doughnut', 'line', 'pie'等，根据需要选择图表类型
-                                        data: {
-                                            labels: ['温度', '湿度', '风速'],
-                                            datasets: [{
-                                                label: '当前天气状况',
-                                                data: [temperature, humidity, windSpeed],
-                                                backgroundColor: [
-                                                    'rgba(255, 99, 132, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                ],
-                                                borderWidth: 1,
-                                            }]
-                                        },
-                                        options: {
-                                            scales: {
-                                                yAxes: [{
-                                                    ticks: {
-                                                        beginAtZero: true
-                                                    }
+                                <script>
+                                    // 确保页面加载完成后再执行此脚本
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        // 从Django模板上下文中获取数据
+                                        var temperature = {{ temperature|safe }};
+                                        var humidity = {{ humidity|safe }};
+                                        var windSpeed = {{ wind_speed|safe }};
+                                
+                                        // 初始化图表
+                                        var ctx = document.getElementById('weatherChart').getContext('2d');
+                                        var weatherChart = new Chart(ctx, {
+                                            type: 'bar', // 或者'doughnut', 'line', 'pie'等，根据需要选择图表类型
+                                            data: {
+                                                labels: ['温度', '湿度', '风速'],
+                                                datasets: [{
+                                                    label: '当前天气状况',
+                                                    data: [temperature, humidity, windSpeed],
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                    ],
+                                                    borderWidth: 1,
                                                 }]
+                                            },
+                                            options: {
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }]
+                                                }
                                             }
-                                        }
+                                        });
                                     });
-                                });
-                            </script>
+                                </script>
                             </div>
                         </div>
-                    </body>
-
-
-
-                      
-                  </div>
-              </div>
-          </div>
+                    </body>   
+                </div>
+            </div>
         </div>
     </div>
+</div>
     <div class="con right" style="width:50%;">
-      <div class="div_any">
-          <div class="left div_any01" style="width:100%;">
-              <div class="div_any_child" style="width:98%;position:relative;height: 420px;">
-                  <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_17.png' %}" alt="Example Image">图像识别效果</div>
-                  <div id="histogramChart3"  style="width: 45%;display: inline-block;height: 400px;margin-top: 15px;"></div>
-                  <div id="lineChart2"  style="width: 52%;height: 90%;display: inline-block;"></div>
-              </div>
-          </div>
-          <div class="left div_any01" style="width:48%;">
-            <div class="div_any_child" style="height: 420px;">
-                <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_18.png' %}" alt="Example Image">识别出鱼的信息</div>
-                <p id="pieChart1" class="p_chart" style="height: 400px;"></p>
+        <div class="div_any">
+            <div class="left div_any01" style="width:100%;">
+                <div class="div_any_child" style="width:98%;position:relative;height: 420px;">
+                    <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_17.png' %}" alt="Example Image">图像识别效果</div>
+                    <style>
+                        .video-container {
+                            display: flex; /* 使用Flex布局 */
+                            justify-content: center; /* 水平居中 */
+                            align-items: center;
+                            margin: 0 auto; /* 自动左右边距，用于居中容器 */
+                            height: 100%; /* 或一个特定的高度，确保与外部容器协调 */
+                        }
+                        video {
+                            width: 45%; /* 调整视频宽度，这里的40%是相对于.video-container的宽度，可以根据需要调整 */
+                            height: auto; /* 保持视频的宽高比 */
+                            margin: 5px; /* 可选，为视频添加外边距以改善视觉效果 */
+                        }
+                    </style>
+                    <div class="video-container">
+                        <video id="videoPlayer1" width="320" height="240" autoplay muted loop>
+                            <source src="{% static 'SmartCenter/videos/video1.mp4' %}" type="video/mp4">
+                        </video>
+                        <video id="videoPlayer2" width="320" height="240" autoplay muted loop>
+                            <source src="{% static 'SmartCenter/videos/video2.mp4' %}" type="video/mp4">
+                        </video>
+                    </div>
+                    <!-- 按钮 -->
+                    <style>
+                        .styled-button {
+                            background-color:  rgba(76, 135, 175, 0.1);; /* 蓝色背景 */
+                            color: white; /* 文字颜色 */
+                            padding: 10px 20px; /* 内边距 */
+                            text-align: center; /* 文字居中 */
+                            display: inline-block; /* 设置为行内块元素 */
+                            font-size: 16px; /* 字体大小 */
+                            cursor: pointer; /* 鼠标悬停时变为手型 */
+                            border-radius: 5px; /* 边角圆润 */
+                            transition: background-color 0.3s; /* 添加过渡效果 */
+                        }                        
+                        .styled-button:hover {/* 悬停时的按钮样式 */
+                            background-color: #336ca5; /* 更深的蓝色背景，增加深度感 */
+                        }
+                        .styled-button.active {
+                            background-color: #336ca5; /* 被点击后（激活）的按钮颜色 */
+                        }
+                    </style>
+                    <!-- HTML 中的按钮应用新样式 -->
+                    <button id="button1" class="styled-button">识别效果</button>
+                    <button id="button2" class="styled-button">左目镜头</button>
+                    <button id="button3" class="styled-button">右目镜头</button>
+            
+                    <!-- 引入jQuery库 -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $(document).ready(function(){
+                            // 默认情况下，第一个按钮是激活状态
+                            $("#button1").addClass("active");
+                            // 为每个按钮绑定点击事件
+                            $("#button1, #button2, #button3").click(function(){
+                                // 移除所有按钮的.active类
+                                $("#button1, #button2, #button3").removeClass("active");
+                                $("#button1").click(function(){
+                                    $("#videoPlayer1 source").attr("src", "{% static 'SmartCenter/videos/video1.mp4' %}");
+                                    $("#videoPlayer2 source").attr("src", "{% static 'SmartCenter/videos/video2.mp4' %}");
+                                    $("#videoPlayer1")[0].load();
+                                    $("#videoPlayer2")[0].load();
+                                    $("#videoPlayer1")[0].play();
+                                    $("#videoPlayer2")[0].play();
+                                    $(this).addClass("active");
+                                });
+                
+                                $("#button2").click(function(){
+                                    $("#videoPlayer1 source").attr("src", "{% static 'SmartCenter/videos/video1.mp4' %}");
+                                    $("#videoPlayer2 source").attr("src", "{% static 'SmartCenter/videos/video3.mp4' %}");
+                                    $("#videoPlayer1")[0].load();
+                                    $("#videoPlayer2")[0].load();
+                                    $("#videoPlayer1")[0].play();
+                                    $("#videoPlayer2")[0].play();
+                                    $(this).addClass("active");
+                                });
+                
+                                $("#button3").click(function(){
+                                    $("#videoPlayer1 source").attr("src", "{% static 'SmartCenter/videos/video3.mp4' %}");
+                                    $("#videoPlayer2 source").attr("src", "{% static 'SmartCenter/videos/video2.mp4' %}");
+                                    $("#videoPlayer1")[0].load();
+                                    $("#videoPlayer2")[0].load();
+                                    $("#videoPlayer1")[0].play();
+                                    $("#videoPlayer2")[0].play();
+                                    $(this).addClass("active");
+                                });
+                            });
+                        });
+                    </script>
+                </div>
+            </div>  
+            <div class="left div_any01" style="width:48%;">
+                <div class="div_any_child" style="height: 420px;">
+                    <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_18.png' %}" alt="Example Image">识别出鱼的信息</div>
+                    <p id="pieChart1" class="p_chart" style="height: 400px;"></p>
+                </div>
             </div>
-          </div>
-          <div class="right div_any01" style="width:48%;">
-              <div class="div_any_child" style="height: 420px;">
-                  <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_19.png' %}" alt="Example Image">AI决策</div>
-                  <p id="pieChart2" class="p_chart" style="height: 400px;"></p>
-              </div>
-          </div>
-      </div>
+            <div class="right div_any01" style="width:48%;">
+                <div class="div_any_child" style="height: 420px;">
+                    <div class="div_any_title"><img src="{% static 'SmartCenter/images/title_19.png' %}" alt="Example Image">AI决策</div>
+                    <p id="pieChart2" class="p_chart" style="height: 400px;"></p>
+                </div>
+            </div>
+        </div>
     </div>
-    </body>
-    </html>
+</body>
+</html>
