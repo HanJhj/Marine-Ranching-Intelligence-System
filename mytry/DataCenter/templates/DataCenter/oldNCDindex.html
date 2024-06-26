@@ -17,7 +17,7 @@
     <script src="{% static 'DataCenter/js/echarts.js'%}"></script>
      <script src="{% static 'DataCenter/js/chain.js'%}"></script>
      <script src="{% static 'DataCenter/js/jquery-3.5.1.js'%}"></script>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/J5f5jU1wFzgW6xZI6loz6lQzX0nQJvzW9VcZc" crossorigin="anonymous">
+
 
 
 
@@ -107,15 +107,13 @@ window.onload = time;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
-                        gap: 0px; /* 控制甜甜圈图之间的间距，可以根据需要调整这个值 */
-                        height: 100%;
-                        width: 100%;
+                        gap: 10px; /* 控制甜甜圈图之间的间距，可以根据需要调整这个值 */
                     }
 
                     /* 每个甜甜圈图容器的样式可以进一步定制，这里假设已经定义好了尺寸 */
                     .chart-container {
-                        height: 100%;
-                        width: 100%;
+                        height: 200px;
+                        width: 200px;
                     }
                 </style>
                 <div class="container">
@@ -146,11 +144,8 @@ window.onload = time;
                                 radius: ['40%', '70%'],
                                 avoidLabelOverlap: false,
                                 label: {
-                                    show: true,
-                                    position: 'center',
-                                    formatter: '{b}: {d}%', // 显示格式，{b}是数据项名称，{d}是占比百分比
-                                    fontSize: 16,
-                                    fontWeight: 'normal'
+                                    show: false,
+                                    position: 'center'
                                 },
                                 emphasis: {
                                     label: {
@@ -162,8 +157,7 @@ window.onload = time;
                                 labelLine: {
                                     show: false
                                 },
-                                data: [{value: cpuData, name: 'CPU Usage'}, {value: 100 - cpuData, name: 'CPU Free'}],
-                                color: ['#FFA500', '#90EE90']
+                                data: [{value: cpuData, name: 'CPU Usage'}, {value: 100 - cpuData, name: ''}]
                             }
                         ]
                     };
@@ -174,39 +168,8 @@ window.onload = time;
                                 radius: ['40%', '70%'],
                                 avoidLabelOverlap: false,
                                 label: {
-                                    show: true,
-                                    position: 'center',
-                                    formatter: '{b}: {d}%', // 显示格式，{b}是数据项名称，{d}是占比百分比
-                                    fontSize: 16,
-                                    fontWeight: 'normal'
-                                },
-                                emphasis: {
-                                    label: {
-                                        show: true,
-                                        fontSize: '26',
-                                        fontWeight: 'bold'
-                                    }
-                                },
-                                labelLine: {
-                                    show: false
-                                },
-                                data: [{value: memoryData, name: 'Memory Usage'}, {value: 100 - memoryData, name: 'Memory Free'}],
-                                color: ['#FFA500', '#90EE90']
-                            }
-                        ]
-                    };
-                    var option3 = {
-                        series: [
-                            {
-                                type: 'pie',
-                                radius: ['40%', '70%'],
-                                avoidLabelOverlap: false,
-                                label: {
-                                    show: true,
-                                    position: 'center',
-                                    formatter: '{b}: {d}%', // 显示格式，{b}是数据项名称，{d}是占比百分比
-                                    fontSize: 16,
-                                    fontWeight: 'normal'
+                                    show: false,
+                                    position: 'center'
                                 },
                                 emphasis: {
                                     label: {
@@ -218,8 +181,31 @@ window.onload = time;
                                 labelLine: {
                                     show: false
                                 },
-                                data: [{value: gpuData, name: 'GPU Usage'}, {value: 100 - gpuData, name: 'Memory Free'}],
-                                color: ['#FFA500', '#90EE90']
+                                data: [{value: memoryData, name: 'Memory Usage'}, {value: 100 - memoryData, name: ''}]
+                            }
+                        ]
+                    };
+                    var option3 = {
+                        series: [
+                            {
+                                type: 'pie',
+                                radius: ['40%', '70%'],
+                                avoidLabelOverlap: false,
+                                label: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                data: [{value: gpuData, name: 'GPU Usage'}, {value: 100 - gpuData, name: ''}]
                             }
                         ]
                     };
@@ -243,38 +229,33 @@ window.onload = time;
                 <div id="main" style="flex-grow: 1; width: 90%; height: 90%; padding-left: 5.0%; padding-top: 2.0%;"></div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBud7TZh7NndjWvJ6cLkWlRyPfJ1JHqz2vKup3dL+eqt" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <div class="right div_any01">
             <div class="div_any_child">
-                <div class="div_any_title"><img src="{% static 'DataCenter/images/title_3.png' %}">数据类型统计</div>
-
-                    <div class="table-responsive">
-                        <table class="table data-statistics-table">
+                <div class="div_any_title"><img src="{% static 'DataCenter/images/title_3.png' %}">数据统计</div>
+                <!-- <p id="lineChart" class="p_chart"></p> -->
+                <table class="data-statistics-table">
+                    {% block content %}
+                        <h1>数据统计</h1>
+                        <table>
                             <thead>
                                 <tr>
-                                    <th scope="col">App</th>
-                                    <th scope="col">表名</th>
-                                    <!-- <th scope="col">模型名</th> -->
+                                    <th>App</th>
+                                    <th>表名</th>
+                                    <th>模型名</th>
                                 </tr>
                             </thead>
                             <tbody>
-                        
-                                    {% cycle 'alternate-row-1' 'alternate-row-2' as row_classes silent %}
-                                    {% for info in table_info_list %}
-                                        <tr class="{{ row_classes }}">
-                                            <td>{{ info.app_label }}</td>
-                                            <td>{{ info.table_name }}</td>
-                                            <!-- <td>{{ info.verbose_name }}</td> -->
-                                        </tr>
-                                        {% cycle row_classes %}
-                                    {% endfor %}
-                        
-
+                                {% for info in table_info_list %}
+                                    <tr>
+                                        <td>{{ info.app_label }}</td>
+                                        <td>{{ info.table_name }}</td>
+                                        <td>{{ info.verbose_name }}</td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
-                    </div>
-                    
+                    {% endblock %}
+                </table>
             </div>
             <div class="div_any_child">
                 <div class="div_any_title"><img src="{% static 'DataCenter/images/title_4.png' %}">传感器信息</div>
