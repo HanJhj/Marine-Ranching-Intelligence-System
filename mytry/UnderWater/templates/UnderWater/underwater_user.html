@@ -203,7 +203,8 @@
                         downloadButton.addEventListener('click', function() {
                             // 发送AJAX请求获取数据
                             var xhr = new XMLHttpRequest();
-                            xhr.open('GET', '/download_data/', true);
+                            // xhr.open('GET', '/download_data/', true);
+                            xhr.open('GET', "{% url 'download-csv' %}", true);
                             xhr.responseType = 'blob';
                             xhr.onload = function() {
                                 //将相应内容转化为可下载的URL
